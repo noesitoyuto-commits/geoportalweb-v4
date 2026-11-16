@@ -44,7 +44,13 @@ DEFAULT_ASSET_ID = os.environ.get(
     "GEE_ASSET_ID", "projects/wise-brook-514714-p4/assets/tamburco_glaciar"
 )
 
-app = Flask(__name__, static_folder=str(ROOT_DIR), static_url_path="")
+PUBLIC_DIR = ROOT_DIR / "public"
+
+app = Flask(
+    __name__,
+    static_folder=str(PUBLIC_DIR),
+    static_url_path=""
+)
 if CORS:
     CORS(app)
 
@@ -109,7 +115,7 @@ def load_local_csv(filename: str = "observations_ampay.csv") -> list[dict]:
 
 @app.route("/")
 def serve_index():
-    return send_from_directory(str(ROOT_DIR), "index.html")
+    return send_from_directory(str(PUBLIC_DIR), "index.html")
 
 
 def photo_record(metadata: dict) -> dict:
