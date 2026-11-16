@@ -1,0 +1,36 @@
+{
+  "layer": "SAVI mean 2016-2026",
+  "sourceFile": "Raster_SAVI_TendenciaSen_Tamburco_10m (1).tif",
+  "sourceBand": "SAVI_mean_2016_2026",
+  "sourceCrs": "EPSG:32718",
+  "displayCrs": "EPSG:4326",
+  "resolutionSourceM": 10,
+  "displayRange": [
+    -0.1,
+    0.6
+  ],
+  "sourceBandStats": {
+    "minimum": -0.072261840105057,
+    "maximum": 0.56841152906418,
+    "mean": 0.17713936252625,
+    "stdDev": 0.10092658136539
+  },
+  "webImage": "savi_mean_2016_2026.png",
+  "bounds": {
+    "south": -13.630807011044626,
+    "west": -72.95218326186043,
+    "north": -13.539342374556265,
+    "east": -72.82122788311138
+  },
+  "rgbaSize": [
+    1200,
+    850
+  ],
+  "method": "Band 1 only; bilinear display reprojection to WGS84; clipped to supplied district polygon.",
+  "excludedSlopeBandStats": {
+    "band": "Sen_Slope_yr",
+    "minimum": -2.5136017799377,
+    "maximum": 2744.2429199219,
+    "reason": "Extreme upper values require review before displaying the trend band."
+  }
+}

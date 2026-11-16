@@ -1,0 +1,1338 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DELTA CLUB – VIVO AMPAY v4.0 | Observatorio Ambiental UNAJMA</title>
+  <link rel="stylesheet" href="assets/vendor/leaflet/leaflet.css">
+  <link rel="stylesheet" href="assets/vendor/katex/katex.min.css">
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+  <div class="app-shell" id="appShell">
+    <!-- RIEL Y MENÚ LATERAL IZQUIERDO CON ICONOGRAFÍA VECTORIAL CIENTÍFICA (CERO EMOJIS) -->
+    <aside class="sidebar">
+      <div class="brand-box">
+        <button type="button" class="brand-logo" id="btnToggleSidebar" aria-label="Colapsar o expandir el panel lateral" title="Colapsar / Expandir panel lateral">
+          <img src="assets/delta-club.jpeg" alt="Delta Club" width="46" height="46">
+        </button>
+        <div class="brand-text-wrap">
+          <div class="brand-title" data-i18n="app_title" data-editable="true">DELTA CLUB · VIVO AMPAY</div>
+          <div class="brand-sub" data-i18n="app_subtitle" data-editable="true">OBSERVATORIO AMBIENTAL · UNAJMA</div>
+        </div>
+      </div>
+
+      <nav class="nav-list" aria-label="Navegación Principal">
+        <button class="nav-btn active" id="navBtnHud" data-tab="tab-hud">
+          <span class="nav-svg">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+          </span>
+          <span data-i18n="nav_hud">Observatorio HUD Satelital</span>
+        </button>
+
+        <button class="nav-btn" id="navBtnResumen" data-tab="tab-resumen">
+          <span class="nav-svg">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19V5m0 14h16M8 15v-5m4 5V8m4 7v-3"/></svg>
+          </span>
+          <span data-i18n="nav_resumen">Resumen Ejecutivo</span>
+        </button>
+
+        <button class="nav-btn" id="navBtnMapa" data-tab="tab-mapa">
+          <span class="nav-svg">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg>
+          </span>
+          <span data-i18n="nav_mapa">Mapa SIG Interactivo</span>
+        </button>
+
+        <button class="nav-btn" id="navBtnVeg" data-tab="tab-vegetacion">
+          <span class="nav-svg">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg>
+          </span>
+          <span data-i18n="nav_veg">1. Vegetación</span>
+        </button>
+
+        <button class="nav-btn" id="navBtnCrio" data-tab="tab-criosfera">
+          <span class="nav-svg">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><line x1="12" y1="2" x2="12" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/><line x1="19.07" y1="4.93" x2="4.93" y2="19.07"/></svg>
+          </span>
+          <span data-i18n="nav_crio">2. Agua y Criósfera</span>
+        </button>
+
+        <button class="nav-btn" id="navBtnTemp" data-tab="tab-temperatura">
+          <span class="nav-svg">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z"/></svg>
+          </span>
+          <span data-i18n="nav_temp">3. Temperatura</span>
+        </button>
+
+        <button class="nav-btn" id="navBtnPrec" data-tab="tab-precipitacion">
+          <span class="nav-svg">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M16 13v8m-8-8v8m4-6v8M20 16.58A5 5 0 0 0 18 7h-1.26A8 8 0 1 0 4 15.25"/></svg>
+          </span>
+          <span data-i18n="nav_prec">4. Precipitación</span>
+        </button>
+
+        <button class="nav-btn" id="navBtnRad" data-tab="tab-radiacion">
+          <span class="nav-svg">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/></svg>
+          </span>
+          <span data-i18n="nav_rad">5. Radiación Solar</span>
+        </button>
+
+        <button class="nav-btn" id="navBtnGlaciar" data-tab="tab-glaciar">
+          <span class="nav-svg">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m8 3 4 8 5-5 5 15H2L8 3z"/></svg>
+          </span>
+          <span data-i18n="nav_glaciar">6. Retroceso Glaciar</span>
+        </button>
+
+        <button class="nav-btn" id="navBtnBd" data-tab="tab-bd">
+          <span class="nav-svg">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+          </span>
+          <span data-i18n="nav_bd">Base de Datos (2016–2026)</span>
+        </button>
+
+        <button class="nav-btn" id="navBtnReporte" data-tab="tab-reporte">
+          <span class="nav-svg">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="16" y2="17"/></svg>
+          </span>
+          <span data-i18n="nav_reporte">Reporte Satelital</span>
+        </button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <button class="btn" id="btnOpenGlossary" style="width:100%;">
+          <span class="nav-svg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></span>
+          <span data-i18n="btn_glossary">Glosario científico</span>
+        </button>
+        <button class="btn" id="btnGoUpload" style="width:100%;">
+          <span class="nav-svg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg></span>
+          <span data-i18n="btn_upload_open">Subir Datos / Fotos</span>
+        </button>
+        <button class="btn" id="btnOpenGeeModal" style="width:100%;">
+          <span class="nav-svg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9"/></svg></span>
+          <span>GEE API</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- ÁREA DE TRABAJO -->
+    <div class="workspace">
+      <header class="topbar">
+        <div class="topbar-left">
+          <div class="mode-pill" id="modeStatusPill">
+            <span class="mode-dot"></span>
+            <span id="modeStatusText">LOCAL · Contingencia · 1,965 registros</span>
+          </div>
+          <button class="btn" id="btnSwitchMode" data-i18n="btn_switch_mode">Conectar GEE</button>
+        </div>
+
+        <div class="topbar-right">
+          <!-- Escala de interfaz para agrandar o reducir tarjetas y textos -->
+          <div class="zoom-ui-switch" title="Escalar tamaño de interfaz y paneles">
+            <button class="zoom-ui-btn" data-scale="0.92">A-</button>
+            <button class="zoom-ui-btn" data-scale="1">100%</button>
+            <button class="zoom-ui-btn" data-scale="1.1">A+</button>
+            <button class="zoom-ui-btn" data-scale="1.18">A++</button>
+          </div>
+
+          <button class="btn" id="btnEditMode" data-i18n-title="edit_mode_title" title="Editar textos y títulos">
+            <span class="btn-svg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></span>
+            <span data-i18n="btn_edit_mode">Modo Edición</span>
+          </button>
+
+          <button class="btn" id="btnAiToggle">
+            <span class="btn-svg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></span>
+            <span data-i18n="btn_ai_toggle">Síntesis Analítica</span>
+          </button>
+
+          <button class="btn" id="btnExportChart" type="button">
+            <span class="btn-svg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></span>
+            <span data-i18n="btn_export_chart">Exportar gráfico</span>
+          </button>
+
+          <div class="lang-switch" role="group" aria-label="Selector de Idioma">
+            <button class="lang-btn active" id="langBtnEs" data-lang="es">ES</button>
+            <button class="lang-btn" id="langBtnEn" data-lang="en">EN</button>
+          </div>
+        </div>
+      </header>
+
+      <main class="main-scroll">
+        <!-- ================================================================
+             VISTA 0: OBSERVATORIO HUD SATELITAL FLOTANTE (RÉPLICA DE TUS DOS FOTOS)
+             ================================================================ -->
+        <section class="tab-pane active" id="tab-hud">
+          <div id="hudMapCanvas"></div>
+
+          <div class="hud-overlay" id="hudOverlayContainer">
+            <!-- Barra superior flotante del visor -->
+            <div class="hud-panel hud-top-bar">
+              <div>
+                <strong style="font-size:12px;color:#fff;" data-editable="true">Visor Geográfico Satelital · Santuario Nacional de Ampay y Tamburco</strong>
+              </div>
+              <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+                <select class="select-input" id="hudBasemapSelect" style="width:auto;padding:4px 8px;font-size:11px;">
+                  <option value="sat">Mapa base · Satélite Esri</option>
+                  <option value="dark">Mapa base · Oscuro Científico</option>
+                  <option value="topo">Mapa base · Topográfico</option>
+                </select>
+                <label style="font-size:11px;display:flex;align-items:center;gap:5px;cursor:pointer;">
+                  <input type="checkbox" id="hudSaviCheck" checked style="accent-color:#2dd4bf;"> SAVI medio (10 m)
+                </label>
+                <label style="font-size:11px;display:flex;align-items:center;gap:5px;cursor:pointer;">
+                  <input type="checkbox" id="hudVectorsCheck" checked style="accent-color:#2dd4bf;"> Polígonos GEE
+                </label>
+                <button class="btn" id="btnHudSoloMapa" style="padding:4px 8px;font-size:11px;">Ocultar / Mostrar HUD</button>
+              </div>
+            </div>
+
+            <!-- Columna izquierda flotante (4 KPIs + Resumen Estadístico + Calidad y ecuaciones) -->
+            <div class="hud-left-col">
+              <div class="hud-panel" id="hudKpiPanel">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+                  <span style="font-size:11px;font-weight:700;color:var(--accent-teal);letter-spacing:0.05em;">TELEMETRÍA MULTIANUAL (2016–2026)</span>
+                  <button class="icon-expand-btn" data-expand="hudKpiPanel" title="Agrandar / Restaurar panel"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></button>
+                </div>
+                <div class="hud-kpi-grid">
+                  <div class="hud-kpi-box">
+                    <div class="hud-kpi-label"><span data-i18n="hud_active_area">Área cartográfica</span></div>
+                    <div class="hud-kpi-val" id="hudKpiArea" data-editable="true">Ampay · Tamburco</div>
+                    <div class="hud-kpi-sub" id="hudKpiAreaSub">6,931.977 ha</div>
+                  </div>
+                  <div class="hud-kpi-box">
+                    <div class="hud-kpi-label"><span data-i18n="hud_valid_obs">Observaciones válidas</span></div>
+                    <div class="hud-kpi-val num-tabular" id="hudKpiObs">106</div>
+                    <div class="hud-kpi-sub" id="hudKpiObsSub">131 meses (2016–2026)</div>
+                  </div>
+                  <div class="hud-kpi-box">
+                    <div class="hud-kpi-label"><span data-i18n="hud_sen_trend">Pendiente de Sen</span></div>
+                    <div class="hud-kpi-val num-tabular" id="hudKpiSen">-0.0068</div>
+                    <div class="hud-kpi-sub" id="hudKpiSenSub">por año · Mann-Kendall</div>
+                  </div>
+                  <div class="hud-kpi-box">
+                    <div class="hud-kpi-label"><span data-i18n="hud_last_val">Último dato registrado</span></div>
+                    <div class="hud-kpi-val num-tabular" id="hudKpiLast">0.478</div>
+                    <div class="hud-kpi-sub" id="hudKpiLastSub">2026-10</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="hud-panel" id="hudStatSummaryPanel">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:5px;">
+                  <strong style="font-size:11.5px;color:#fff;" data-i18n="hud_stat_summary">Resumen estadístico y no paramétrico (2016–2026)</strong>
+                  <button class="icon-expand-btn" data-expand="hudStatSummaryPanel" title="Agrandar / Restaurar panel"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></button>
+                </div>
+                <p id="hudStatText" style="font-size:11px;color:var(--text-secondary);" data-editable="true"></p>
+                <div class="chip-row" id="hudStatChips"></div>
+              </div>
+
+              <div class="hud-panel" id="hudQualityPanel">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+                  <strong style="font-size:11.5px;color:#fff;" data-i18n="hud_quality_title">Calidad, procedencia y ecuaciones</strong>
+                  <button class="icon-expand-btn" data-expand="hudQualityPanel" title="Agrandar / Restaurar panel"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></button>
+                </div>
+                <div class="latex-box" id="hudLatexFormula" style="width:100%;margin-bottom:6px;"></div>
+                <p id="hudSourceMeta" style="font-size:10.5px;color:var(--text-secondary);"></p>
+              </div>
+            </div>
+
+            <!-- Panel Inferior Central Flotante (Gráfico de Serie Temporal 2016–2026 Expandible) -->
+            <div class="hud-panel hud-bottom-center" id="hudChartCard">
+              <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:6px;">
+                <div>
+                  <strong id="hudChartTitle" style="font-size:13px;color:#fff;" data-editable="true">NDVI · Índice de Vegetación de Diferencia Normalizada</strong>
+                  <div id="hudChartSub" style="font-size:10.5px;color:var(--text-secondary);" data-editable="true"></div>
+                </div>
+                <button class="icon-expand-btn" data-expand="hudChartCard" title="Agrandar gráfico a pantalla completa"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></button>
+              </div>
+              <div class="hud-chart-box">
+                <canvas id="chartHudSeries" aria-labelledby="hudChartTitle"></canvas>
+              </div>
+            </div>
+
+            <!-- Columna Derecha Flotante (Radar Satelital Vectorial + Laboratorio de Series de Tiempo 2016–2026) -->
+            <div class="hud-right-col">
+              <div class="hud-panel" id="hudRadarCard">
+                <div style="display:flex;justify-content:space-between;align-items:center;">
+                  <div>
+                    <strong style="font-size:12px;color:#fff;">Constelación Satelital GEE</strong>
+                    <div style="font-size:10px;color:var(--text-secondary);">Sentinel-2 MSI · MODIS · ERA5-Land · GPM</div>
+                  </div>
+                  <span class="stat-chip" style="color:#2dd4bf;border-color:#2dd4bf;">2016–2026</span>
+                </div>
+                <div class="sat-radar-wrap">
+                  <svg class="sat-orbit-svg" viewBox="0 0 100 100" fill="none">
+                    <circle cx="50" cy="55" r="36" stroke="rgba(34,211,238,0.28)" stroke-width="1" stroke-dasharray="4 3"/>
+                    <ellipse cx="50" cy="55" rx="44" ry="18" stroke="rgba(45,212,191,0.45)" stroke-width="1.2"/>
+                    <circle cx="50" cy="55" r="5" fill="#2dd4bf"/>
+                    <g transform="translate(58,16) rotate(-25)">
+                      <rect x="-16" y="-4" width="11" height="8" fill="#0284c7" stroke="#38bdf8" stroke-width="1"/>
+                      <rect x="-4" y="-5" width="8" height="10" fill="#e2e8f0"/>
+                      <rect x="5" y="-4" width="11" height="8" fill="#0284c7" stroke="#38bdf8" stroke-width="1"/>
+                    </g>
+                  </svg>
+                  <div style="font-size:10.5px;color:var(--text-secondary);line-height:1.45;">
+                    <div><b style="color:#fff;">Asset GEE:</b> <code>tamburco_glaciar</code></div>
+                    <div><b style="color:#fff;">Esquema:</b> 14 Columnas Estandarizadas</div>
+                    <div><b style="color:#fff;">Cobertura:</b> Ene 2016 – Nov 2026 (131 meses)</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="hud-panel" id="hudLabCard">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+                  <div>
+                    <strong style="font-size:12.5px;color:#fff;" data-i18n="hud_lab_title">Laboratorio de Series de Tiempo (2016–2026)</strong>
+                    <div style="font-size:10px;color:var(--text-secondary);" data-i18n="hud_lab_sub">Configura el factor, índice, sensor, rango de años y frecuencia</div>
+                  </div>
+                  <button class="icon-expand-btn" data-expand="hudLabCard" title="Agrandar panel"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></button>
+                </div>
+
+                <div class="control-group" style="margin-bottom:8px;">
+                  <label for="hudVarSelect">Variable / Índice Satelital (Todos los años):</label>
+                  <select class="select-input" id="hudVarSelect">
+                    <optgroup label="1. Vegetación (Sentinel-2)">
+                      <option value="NDVI">NDVI · Vigor Vegetal Bosque Intimpas</option>
+                      <option value="SAVI">SAVI · Vegetación Ajustada al Suelo</option>
+                      <option value="NDMI">NDMI · Humedad Foliar de la Vegetación</option>
+                      <option value="EVI">EVI · Índice de Vegetación Mejorado</option>
+                    </optgroup>
+                    <optgroup label="2. Agua y Criósfera (Sentinel-2)">
+                      <option value="NDSI">NDSI · Cobertura de Nieve Ampay</option>
+                      <option value="Area_glaciar">Area_glaciar · Nieve y hielo detectados (km²)</option>
+                      <option value="MNDWI">MNDWI · Espejos de Agua y Humedad</option>
+                    </optgroup>
+                    <optgroup label="3. Temperatura (MODIS + ERA5-Land)">
+                      <option value="LST_DIA">LST_DIA · Temperatura Superficial Diurna (°C)</option>
+                      <option value="LST_NOCHE">LST_NOCHE · Temperatura Superficial Nocturna (°C)</option>
+                      <option value="T2M">T2M · Temperatura del Aire a 2m (°C)</option>
+                    </optgroup>
+                    <optgroup label="4. Precipitación (GPM IMERG + CHIRPS)">
+                      <option value="PRECIPITACION">PRECIPITACION · Acumulada Mensual (mm/mes)</option>
+                    </optgroup>
+                    <optgroup label="5. Radiación Solar (ERA5-Land + MODIS)">
+                      <option value="RADIACION">RADIACION · Onda Corta ERA5-Land (kWh/m²)</option>
+                      <option value="RADIACION_NASA">RADIACION_NASA · MODIS MCD18A1 (kWh/m²)</option>
+                    </optgroup>
+                  </select>
+                </div>
+
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px;">
+                  <div class="control-group">
+                    <label for="hudDateStart" data-i18n="date_start">Desde</label>
+                    <input type="date" id="hudDateStart" data-range-date="start" class="text-input" value="2016-01-01" min="2016-01-01" max="2026-11-01" required>
+                  </div>
+                  <div class="control-group">
+                    <label for="hudDateEnd" data-i18n="date_end">Hasta</label>
+                    <input type="date" id="hudDateEnd" data-range-date="end" class="text-input" value="2026-11-01" min="2016-01-01" max="2026-11-01" required>
+                  </div>
+                </div>
+
+                <div class="control-group" style="margin-bottom:8px;">
+                  <label for="hudFreqSelect">Frecuencia de agregación:</label>
+                  <select class="select-input" id="hudFreqSelect">
+                    <option value="month">Mensual (131 meses: 2016–2026)</option>
+                    <option value="quarter">Trimestral (44 trimestres)</option>
+                    <option value="year">Anual (11 años: 2016–2026)</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ================================================================
+             PESTAÑA 1: RESUMEN EJECUTIVO MULTICRITERIO
+             ================================================================ -->
+        <section class="tab-pane" id="tab-resumen">
+          <div class="section-header">
+            <div>
+              <h1 data-i18n="resumen_title" data-editable="true">Resumen Ejecutivo Multicriterio (2016–2026)</h1>
+              <p data-i18n="resumen_desc" data-editable="true">Diagnóstico ambiental integrado de la cabecera de cuenca, glaciar y bosque de Intimpas en el Santuario Nacional de Ampay.</p>
+            </div>
+          </div>
+
+          <div class="date-range no-print" role="group" aria-labelledby="sumRangeLabel">
+            <strong class="date-range-title" id="sumRangeLabel" data-i18n="date_range_title">Periodo de las series</strong>
+            <div class="control-group">
+              <label for="sumDateStart" data-i18n="date_start">Desde</label>
+              <input type="date" id="sumDateStart" data-range-date="start" class="text-input" value="2016-01-01" min="2016-01-01" max="2026-11-01" required>
+            </div>
+            <div class="control-group">
+              <label for="sumDateEnd" data-i18n="date_end">Hasta</label>
+              <input type="date" id="sumDateEnd" data-range-date="end" class="text-input" value="2026-11-01" min="2016-01-01" max="2026-11-01" required>
+            </div>
+          </div>
+
+          <div class="kpi-row">
+            <article class="kpi-card emerald">
+              <span class="kpi-title" data-i18n="kpi_veg_title">VIGOR VEGETAL (NDVI INTIMPAS)</span>
+              <strong class="kpi-value num-tabular" id="kpiVegVal" data-editable="true">0.478</strong>
+              <span class="kpi-delta num-tabular" id="kpiVegDelta">Q = -0.0068/año · τ = -0.153</span>
+            </article>
+            <article class="kpi-card cyan">
+              <span class="kpi-title" data-i18n="kpi_ndmi_title">HUMEDAD VEGETAL (NDMI BOSQUE)</span>
+              <strong class="kpi-value num-tabular" id="kpiNdmiVal" data-editable="true">0.082</strong>
+              <span class="kpi-delta info num-tabular" id="kpiNdmiDelta">Q = +0.0004/año · Estable</span>
+            </article>
+            <article class="kpi-card blue">
+              <span class="kpi-title" data-i18n="kpi_ndsi_title">CRIÓSFERA Y GLACIAR (AMPAY)</span>
+              <strong class="kpi-value num-tabular" id="kpiNdsiVal" data-editable="true">0.412 km²</strong>
+              <span class="kpi-delta neg num-tabular" id="kpiNdsiDelta">Q = -0.0355 km²/año</span>
+            </article>
+            <article class="kpi-card amber">
+              <span class="kpi-title" data-i18n="kpi_prec_title">PRECIPITACIÓN ANUAL MEDIA</span>
+              <strong class="kpi-value num-tabular" id="kpiPrecVal" data-editable="true">695 mm</strong>
+              <span class="kpi-delta warn" id="kpiPrecDelta">Media Plurianual 2016–2025</span>
+            </article>
+            <article class="kpi-card purple">
+              <span class="kpi-title" data-i18n="kpi_area_title">ÁREA CARTOGRÁFICA DE TAMBURCO</span>
+              <strong class="kpi-value num-tabular" data-i18n="kpi_area_val" data-editable="true">6,931.977 ha</strong>
+              <span class="kpi-delta info" id="kpiTotalObs">1,965 registros (2016–2026)</span>
+            </article>
+          </div>
+
+          <div class="ai-box" id="aiSummaryResumen">
+            <div class="ai-head">
+              <span class="ai-title">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                <span data-i18n="ai_panel_title">Síntesis Científica y Ciudadana del Estado Ecosistémico</span>
+              </span>
+              <span class="ai-badge" data-i18n="ai_panel_badge">Análisis Automatizado</span>
+            </div>
+            <p class="ai-text" data-editable="true" id="resumenNdmi"></p>
+            <p class="ai-text" data-editable="true" id="resumenGlaciar"></p>
+          </div>
+
+          <div class="card" id="resumenMultiChartCard">
+            <div class="card-header">
+              <div>
+                <h2 class="card-title" id="resumenChartTitle" data-i18n="chart_multi_title" data-editable="true">Dinámica Comparativa Multicriterio (NDVI vs. NDMI vs. Precipitación Mensual)</h2>
+                <p class="card-sub" data-i18n="chart_multi_sub">Evolución mensual acoplada 2016–2026 entre régimen pluvial, humedad foliar y vigor del bosque de Intimpas (leyenda fija).</p>
+              </div>
+              <button class="icon-expand-btn" data-expand="resumenMultiChartCard" title="Agrandar gráfico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></button>
+            </div>
+            <div class="chart-container">
+              <canvas id="chartMultiResumen" aria-labelledby="resumenChartTitle"></canvas>
+            </div>
+          </div>
+        </section>
+
+        <!-- ================================================================
+             PESTAÑA 2: MAPA SIG INTERACTIVO
+             ================================================================ -->
+        <section class="tab-pane" id="tab-mapa">
+          <div class="section-header">
+            <div>
+              <h1 data-i18n="mapa_title" data-editable="true">Mapa SIG Interactivo y Zonificación Ecológica</h1>
+              <p data-i18n="mapa_desc">Polígonos reales en WGS84 (GEE Asset), cobertura SAVI/NDVI del Bosque de Intimpas, zona criosférica, lagunas altoandinas y puesto de control Entrada a Ampay.</p>
+            </div>
+            <a class="btn" href="#ampayComparison" data-i18n="compare_link">Comparación 2017–2026</a>
+          </div>
+
+          <div class="date-range no-print" role="group" aria-labelledby="mapRangeLabel">
+            <strong class="date-range-title" id="mapRangeLabel" data-i18n="date_range_title">Periodo de las series</strong>
+            <div class="control-group">
+              <label for="mapDateStart" data-i18n="date_start">Desde</label>
+              <input type="date" id="mapDateStart" data-range-date="start" class="text-input" value="2016-01-01" min="2016-01-01" max="2026-11-01" required>
+            </div>
+            <div class="control-group">
+              <label for="mapDateEnd" data-i18n="date_end">Hasta</label>
+              <input type="date" id="mapDateEnd" data-range-date="end" class="text-input" value="2026-11-01" min="2016-01-01" max="2026-11-01" required>
+            </div>
+          </div>
+
+          <div class="map-layout">
+            <div class="map-box" id="sigMapContainerCard">
+              <div id="leafletMap" aria-label="Mapa interactivo de Ampay y Tamburco"></div>
+            </div>
+
+            <aside class="map-side-panel">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+                <h3 data-i18n="map_layer_panel" style="margin:0;">Control de Capas y Leyenda</h3>
+                <button class="icon-expand-btn" data-expand="sigMapContainerCard" title="Agrandar Mapa SIG"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></button>
+              </div>
+
+              <div class="layer-group">
+                <label style="display:block;font-size:11px;color:#94b2c4;margin-bottom:5px;" data-i18n="map_base_label">Mapa Base Satelital / Cartográfico</label>
+                <select class="select-input" id="mapBaseSelect">
+                  <option value="sat" data-i18n="map_base_sat">Satélite Esri (Alta Resolución)</option>
+                  <option value="topo" data-i18n="map_base_topo">Topográfico (Esri World Topo)</option>
+                  <option value="dark" data-i18n="map_base_dark">Oscuro Científico (ArcGIS Dark Gray)</option>
+                  <option value="osm" data-i18n="map_base_osm">Mapa Vial (World Street Map)</option>
+                  <option value="nasa" data-i18n="map_base_nasa">NASA GIBS (MODIS Terra TrueColor)</option>
+                </select>
+              </div>
+
+              <div class="layer-group">
+                <label style="display:block;font-size:11px;color:#94b2c4;margin-bottom:5px;" data-i18n="map_period_label">Periodo para colorear NDVI del Bosque:</label>
+                <select class="select-input" id="mapNdviPeriod"></select>
+                <div id="mapNdviReadout" class="num-tabular" style="margin-top:6px;font-size:12px;font-weight:700;color:#10b981;">NDVI Bosque: 0.478</div>
+              </div>
+
+              <div class="layer-group">
+                <label style="display:block;font-size:11px;color:#94b2c4;margin-bottom:7px;" data-i18n="map_overlays_label">Capas Vectoriales y Ráster (GeoJSON / GEE)</label>
+
+                <label class="layer-option"><input type="checkbox" class="map-layer-toggle" data-layer="tamburco" checked><span class="swatch" style="background:#fde68a;"></span><span data-i18n="layer_tamburco">Distrito de Tamburco · Mapas Ampay</span></label>
+                <label class="layer-option"><input type="checkbox" class="map-layer-toggle" data-layer="limite" checked><span class="swatch" style="background:#2dd4bf;"></span><span data-i18n="layer_limite">Límite de Estudio Ampay–Tamburco</span></label>
+                <label class="layer-option"><input type="checkbox" class="map-layer-toggle" data-layer="bosque" checked><span class="swatch" style="background:#10b981;"></span><span data-i18n="layer_bosque">Bosque de Intimpas (Vinculado a NDVI)</span></label>
+                <label class="layer-option"><input type="checkbox" class="map-layer-toggle" data-layer="saviRaster"><span class="swatch" style="background:linear-gradient(90deg,#ca8a04,#16a34a);"></span><span data-i18n="layer_savi_raster">Ráster Satelital SAVI 10m (Sentinel-2)</span></label>
+                <label class="layer-option"><input type="checkbox" class="map-layer-toggle" data-layer="glaciar" checked><span class="swatch" style="background:#38bdf8;"></span><span data-i18n="layer_glaciar">Nevado Ampay y Zona Criosférica</span></label>
+                <label class="layer-option"><input type="checkbox" class="map-layer-toggle" data-layer="lagunas" checked><span class="swatch" style="background:#0284c7;"></span><span data-i18n="layer_lagunas">Lagunas Altoandinas (Uspaccocha / Angascocha)</span></label>
+                <label class="layer-option"><input type="checkbox" class="map-layer-toggle" data-layer="amort" checked><span class="swatch" style="background:#f59e0b;"></span><span data-i18n="layer_amort">Zona de Amortiguamiento (Tamburco)</span></label>
+                <label class="layer-option"><input type="checkbox" class="map-layer-toggle" data-layer="entrada" checked><span class="swatch" style="background:#ef4444;border-radius:50%;"></span><span data-i18n="layer_entrada">Entrada a Ampay (Caseta del Cuidador)</span></label>
+                <label class="layer-option"><input type="checkbox" class="map-layer-toggle" data-layer="custom" checked><span class="swatch" style="background:#ec4899;"></span><span data-i18n="layer_custom">Polígonos / Datos Subidos por Usuario</span></label>
+              </div>
+            </aside>
+          </div>
+          <p class="map-period-note" data-i18n="map_period_note">El rango filtra los indicadores del mapa. Las capas de Mapas Ampay y las láminas comparativas indican su propio periodo de observación.</p>
+
+          <section class="card ampay-comparison" id="ampayComparison" aria-labelledby="ampayComparisonTitle">
+            <div class="card-header">
+              <div>
+                <h2 class="card-title" id="ampayComparisonTitle" data-i18n="compare_title">Comparación satelital 2017–2026</h2>
+                <p class="card-sub" data-i18n="compare_desc">Referencias del 1 de noviembre de 2017 y del 1 de noviembre de 2026. Cada lámina compara del 2 de octubre al 8 de noviembre del año respectivo.</p>
+              </div>
+              <div class="control-group">
+                <label for="ampayComparisonSelect" data-i18n="compare_variable">Variable</label>
+                <select class="select-input" id="ampayComparisonSelect">
+                  <optgroup label="Sentinel-2">
+                    <option value="NDVI">NDVI</option>
+                    <option value="SAVI">SAVI</option>
+                    <option value="NDMI">NDMI</option>
+                    <option value="EVI">EVI</option>
+                    <option value="NDSI">NDSI</option>
+                    <option value="NDWI">NDWI</option>
+                  </optgroup>
+                  <optgroup label="MODIS / ERA5-Land / CHIRPS">
+                    <option value="LST_dia" data-i18n="compare_lst_day">Temperatura superficial diurna</option>
+                    <option value="LST_noche" data-i18n="compare_lst_night">Temperatura superficial nocturna</option>
+                    <option value="T2M" data-i18n="compare_t2m">Temperatura del aire a 2 m</option>
+                    <option value="PP" data-i18n="compare_pp">Precipitación acumulada</option>
+                    <option value="RAD" data-i18n="compare_rad">Radiación solar</option>
+                  </optgroup>
+                </select>
+              </div>
+            </div>
+            <p class="card-sub" id="ampayComparisonNote" hidden></p>
+            <button type="button" class="image-preview-trigger" id="ampayComparisonZoom" data-i18n-title="image_zoom">
+              <img id="ampayComparisonImage" loading="lazy" decoding="async" alt="">
+            </button>
+          </section>
+        </section>
+
+        <!-- ================================================================
+             PESTAÑA 3: FACTOR 1 - VEGETACIÓN (CON ECUACIONES Y FILTRO DE AÑOS)
+             ================================================================ -->
+        <section class="tab-pane" id="tab-vegetacion">
+          <div class="section-header">
+            <div>
+              <h1 data-i18n="veg_title" data-editable="true">Factor 1: Cobertura Vegetal y Salud del Bosque de Intimpas</h1>
+              <p data-i18n="veg_desc">Monitoreo espectral de biomasa, vigor fotosintético y contenido hídrico foliar mediante Sentinel-2 MSI (10m – 20m) entre 2016 y 2026.</p>
+            </div>
+          </div>
+
+          <div class="card" id="vegCardMain">
+            <div class="card-header">
+              <strong class="card-title">Configuración Espectral y Serie Multianual (2016–2026)</strong>
+              <button class="icon-expand-btn" data-expand="vegCardMain" title="Agrandar tarjeta"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></button>
+            </div>
+            <div class="controls-grid">
+              <div class="control-group">
+                <label for="vegVarSelect" data-i18n="lbl_select_var">Variable / Capa Satelital:</label>
+                <select class="select-input" id="vegVarSelect">
+                  <option value="NDVI">NDVI · Índice de Vegetación de Diferencia Normalizada</option>
+                  <option value="SAVI">SAVI · Índice de Vegetación Ajustado al Suelo</option>
+                  <option value="NDMI">NDMI · Índice de Humedad Foliar de la Vegetación</option>
+                  <option value="EVI">EVI · Índice de Vegetación Mejorado</option>
+                </select>
+              </div>
+              <div class="control-group">
+                <label for="vegZoneSelect" data-i18n="lbl_select_sector">Sector / Ecosistema:</label>
+                <select class="select-input" id="vegZoneSelect">
+                  <option value="AMPAY">Bosque Nativo de Intimpas (Santuario Nacional de Ampay)</option>
+                </select>
+              </div>
+              <div class="control-group">
+                <label for="vegDateStart" data-i18n="date_start">Desde</label>
+                <input type="date" id="vegDateStart" data-range-date="start" class="text-input" value="2016-01-01" min="2016-01-01" max="2026-11-01" required>
+              </div>
+              <div class="control-group">
+                <label for="vegDateEnd" data-i18n="date_end">Hasta</label>
+                <input type="date" id="vegDateEnd" data-range-date="end" class="text-input" value="2026-11-01" min="2016-01-01" max="2026-11-01" required>
+              </div>
+              <div class="control-group">
+                <label for="vegFreqSelect" data-i18n="lbl_select_freq">Frecuencia Temporal:</label>
+                <select class="select-input" id="vegFreqSelect">
+                  <option value="month" data-i18n="freq_month">Mensual</option>
+                  <option value="quarter" data-i18n="freq_quarter">Trimestral</option>
+                  <option value="year" data-i18n="freq_year">Anual</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="stats-banner">
+              <div class="stat-cell">
+                <span class="stat-lbl" data-i18n="lbl_formula">Ecuación espectral</span>
+                <div class="latex-box" id="veg_formula"></div>
+                <small id="veg_collection">COPERNICUS/S2_SR_HARMONIZED</small>
+              </div>
+              <div class="stat-cell">
+                <span class="stat-lbl" data-i18n="lbl_sen_slope">Pendiente de Theil-Sen</span>
+                <div class="latex-box" id="veg_sen"></div>
+                <small>Estimador no paramétrico mediano</small>
+              </div>
+              <div class="stat-cell">
+                <span class="stat-lbl" data-i18n="lbl_kendall_tau">Estadístico Mann-Kendall</span>
+                <div class="latex-box" id="veg_tau"></div>
+                <small id="veg_pval"></small>
+              </div>
+              <div class="stat-cell">
+                <span class="stat-lbl" data-i18n="lbl_descriptive_stats">Estadísticos descriptivos</span>
+                <div class="latex-box" id="veg_mean"></div>
+                <small>Serie Histórica Completa</small>
+              </div>
+            </div>
+
+            <div class="interp-banner" id="veg_interp"></div>
+
+            <div class="chart-container">
+              <canvas id="chartVegetacion"></canvas>
+            </div>
+            <div class="chart-footer-meta" id="veg_footer"></div>
+          </div>
+        </section>
+
+        <!-- ================================================================
+             PESTAÑA 4: FACTOR 2 - AGUA Y CRIÓSFERA
+             ================================================================ -->
+        <section class="tab-pane" id="tab-criosfera">
+          <div class="section-header">
+            <div>
+              <h1 data-i18n="crio_title" data-editable="true">Factor 2: Agua y Criósfera (Monitoreo de Ecosistemas de Alta Montaña)</h1>
+              <p data-i18n="crio_desc">Evaluación integral de cobertura nival (NDSI), área glaciar (km²), humedad del ecosistema (NDMI) y espejos de agua (MNDWI).</p>
+            </div>
+          </div>
+
+          <div class="card" id="crioCardMain">
+            <div class="card-header">
+              <strong class="card-title">Serie Criosférica e Hídrica (2016–2026)</strong>
+              <button class="icon-expand-btn" data-expand="crioCardMain" title="Agrandar tarjeta"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></button>
+            </div>
+            <div class="controls-grid">
+              <div class="control-group">
+                <label for="crioVarSelect" data-i18n="lbl_select_var">Variable / Capa Satelital:</label>
+                <select class="select-input" id="crioVarSelect">
+                  <option value="NDSI">NDSI · Índice Diferencial Normalizado de Nieve</option>
+                  <option value="Area_glaciar">Area_glaciar · Nieve y hielo detectados (km²)</option>
+                  <option value="NDMI">NDMI · Humedad del Ecosistema Criosférico</option>
+                  <option value="MNDWI">MNDWI · Índice de Agua Modificado (Lagunas / Humedad)</option>
+                </select>
+              </div>
+              <div class="control-group">
+                <label for="crioZoneSelect" data-i18n="lbl_select_sector">Sector / Ecosistema:</label>
+                <select class="select-input" id="crioZoneSelect">
+                  <option value="AMPAY">Nevado Ampay y Cabecera Criosférica</option>
+                </select>
+              </div>
+              <div class="control-group">
+                <label for="crioDateStart" data-i18n="date_start">Desde</label>
+                <input type="date" id="crioDateStart" data-range-date="start" class="text-input" value="2016-01-01" min="2016-01-01" max="2026-11-01" required>
+              </div>
+              <div class="control-group">
+                <label for="crioDateEnd" data-i18n="date_end">Hasta</label>
+                <input type="date" id="crioDateEnd" data-range-date="end" class="text-input" value="2026-11-01" min="2016-01-01" max="2026-11-01" required>
+              </div>
+              <div class="control-group">
+                <label for="crioFreqSelect" data-i18n="lbl_select_freq">Frecuencia Temporal:</label>
+                <select class="select-input" id="crioFreqSelect">
+                  <option value="month" data-i18n="freq_month">Mensual</option>
+                  <option value="quarter" data-i18n="freq_quarter">Trimestral</option>
+                  <option value="year" data-i18n="freq_year">Anual</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="stats-banner">
+              <div class="stat-cell">
+                <span class="stat-lbl" data-i18n="lbl_formula">Ecuación espectral</span>
+                <div class="latex-box" id="crio_formula"></div>
+                <small id="crio_collection">COPERNICUS/S2_SR_HARMONIZED</small>
+              </div>
+              <div class="stat-cell">
+                <span class="stat-lbl" data-i18n="lbl_sen_slope">Pendiente de Theil-Sen</span>
+                <div class="latex-box" id="crio_sen"></div>
+                <small>Estimador no paramétrico mediano</small>
+              </div>
+              <div class="stat-cell">
+                <span class="stat-lbl" data-i18n="lbl_kendall_tau">Estadístico Mann-Kendall</span>
+                <div class="latex-box" id="crio_tau"></div>
+                <small id="crio_pval"></small>
+              </div>
+              <div class="stat-cell">
+                <span class="stat-lbl" data-i18n="lbl_descriptive_stats">Estadísticos descriptivos</span>
+                <div class="latex-box" id="crio_mean"></div>
+                <small>Serie Histórica Completa</small>
+              </div>
+            </div>
+
+            <div class="interp-banner" id="crio_interp"></div>
+
+            <div class="chart-container">
+              <canvas id="chartCriosfera"></canvas>
+            </div>
+            <div class="chart-footer-meta" id="crio_footer"></div>
+          </div>
+        </section>
+
+        <!-- ================================================================
+             PESTAÑA 5: FACTOR 3 - TEMPERATURA
+             ================================================================ -->
+        <section class="tab-pane" id="tab-temperatura">
+          <div class="section-header">
+            <div>
+              <h1 data-i18n="temp_title" data-editable="true">Factor 3: Temperatura Superficial de la Tierra (LST) y del Aire (T2M)</h1>
+              <p data-i18n="temp_desc">Contraste térmico multitemporal entre la superficie terrestre (MODIS 1km Diurna/Nocturna) y el aire a 2 metros (ERA5-Land 11.1km).</p>
+            </div>
+          </div>
+
+          <div class="card" id="tempCardMain">
+            <div class="card-header">
+              <strong class="card-title" id="tempChartTitle" data-i18n="temp_series_title">Dinámica Térmica Multitemporal (2016–2026)</strong>
+              <button class="icon-expand-btn" data-expand="tempCardMain" title="Agrandar tarjeta"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></button>
+            </div>
+            <div class="controls-grid">
+              <div class="control-group">
+                <label for="tempVarSelect" data-i18n="lbl_select_var">Variable / Capa Térmica:</label>
+                <select class="select-input" id="tempVarSelect">
+                  <option value="CONTRASTE">Perfil Comparativo Multitemporal (LST Día vs. T2M Aire vs. LST Noche)</option>
+                  <option value="LST_DIA">LST_DIA · Temperatura Superficial Diurna (MODIS 1km)</option>
+                  <option value="T2M">T2M · Temperatura del Aire a 2m (ERA5-Land 11.1km)</option>
+                  <option value="LST_NOCHE">LST_NOCHE · Temperatura Superficial Nocturna (MODIS 1km)</option>
+                </select>
+              </div>
+              <div class="control-group">
+                <label for="tempDateStart" data-i18n="date_start">Desde</label>
+                <input type="date" id="tempDateStart" data-range-date="start" class="text-input" value="2016-01-01" min="2016-01-01" max="2026-11-01" required>
+              </div>
+              <div class="control-group">
+                <label for="tempDateEnd" data-i18n="date_end">Hasta</label>
+                <input type="date" id="tempDateEnd" data-range-date="end" class="text-input" value="2026-11-01" min="2016-01-01" max="2026-11-01" required>
+              </div>
+              <div class="control-group">
+                <label for="tempFreqSelect" data-i18n="lbl_select_freq">Frecuencia Temporal:</label>
+                <select class="select-input" id="tempFreqSelect">
+                  <option value="month" data-i18n="freq_month">Mensual</option>
+                  <option value="quarter" data-i18n="freq_quarter">Trimestral</option>
+                  <option value="year" data-i18n="freq_year">Anual</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="stats-banner">
+              <div class="stat-cell">
+                <span class="stat-lbl" data-i18n="lbl_physical_formula">Ecuación física</span>
+                <div class="latex-box" id="temp_formula"></div>
+                <small id="temp_collection">MODIS/061/MOD11A2 + ERA5-Land</small>
+              </div>
+              <div class="stat-cell">
+                <span class="stat-lbl" data-i18n="lbl_sen_slope">Pendiente de Theil-Sen</span>
+                <div class="latex-box" id="temp_sen"></div>
+                <small>Estimador no paramétrico mediano</small>
+              </div>
+              <div class="stat-cell">
+                <span class="stat-lbl" data-i18n="lbl_kendall_tau">Estadístico Mann-Kendall</span>
+                <div class="latex-box" id="temp_tau"></div>
+                <small id="temp_pval"></small>
+              </div>
+              <div class="stat-cell">
+                <span class="stat-lbl" data-i18n="lbl_descriptive_stats">Estadísticos descriptivos</span>
+                <div class="latex-box" id="temp_mean"></div>
+                <small>Serie Histórica Completa</small>
+              </div>
+            </div>
+
+            <div class="interp-banner" id="temp_interp"></div>
+
+            <div class="chart-container">
+              <canvas id="chartTemperatura" aria-labelledby="tempChartTitle"></canvas>
+            </div>
+            <div class="chart-footer-meta" id="temp_footer"></div>
+          </div>
+        </section>
+
+        <!-- ================================================================
+             PESTAÑA 6: FACTOR 4 - PRECIPITACIÓN
+             ================================================================ -->
+        <section class="tab-pane" id="tab-precipitacion">
+          <div class="section-header">
+            <div>
+              <h1 data-i18n="prec_title" data-editable="true">Factor 4: Precipitación Acumulada Mensual y Régimen Hídrico</h1>
+              <p data-i18n="prec_desc">Hietograma mensual (ERA5-Land + GPM IMERG / CHIRPS) y anomalía porcentual frente a la media histórica plurianual (2016–2026).</p>
+            </div>
+          </div>
+
+          <div class="card" id="precCardMain">
+            <div class="card-header">
+              <strong class="card-title" id="precChartTitle" data-i18n="prec_series_title">Hietograma y Tendencia Pluviométrica (2016–2026)</strong>
+              <button class="icon-expand-btn" data-expand="precCardMain" title="Agrandar tarjeta"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></button>
+            </div>
+            <div class="controls-grid">
+              <div class="control-group">
+                <label for="precSensorSelect" data-i18n="lbl_select_sensor">Sensor / Fuente Pluviométrica:</label>
+                <select class="select-input" id="precSensorSelect">
+                  <option value="GPM IMERG V07">NASA GPM IMERG V07 (Satélite + ERA5-Land)</option>
+                  <option value="CHIRPS v3.0">CHIRPS v3.0 (UCSB / Estaciones + Infrarrojo)</option>
+                  <option value="ALL">Promedio Integrado Multi-Fuente</option>
+                </select>
+              </div>
+              <div class="control-group">
+                <label for="precDateStart" data-i18n="date_start">Desde</label>
+                <input type="date" id="precDateStart" data-range-date="start" class="text-input" value="2016-01-01" min="2016-01-01" max="2026-11-01" required>
+              </div>
+              <div class="control-group">
+                <label for="precDateEnd" data-i18n="date_end">Hasta</label>
+                <input type="date" id="precDateEnd" data-range-date="end" class="text-input" value="2026-11-01" min="2016-01-01" max="2026-11-01" required>
+              </div>
+              <div class="control-group">
+                <label for="precFreqSelect" data-i18n="lbl_select_freq">Frecuencia Temporal:</label>
+                <select class="select-input" id="precFreqSelect">
+                  <option value="month" data-i18n="freq_month">Mensual</option>
+                  <option value="quarter" data-i18n="freq_quarter">Trimestral</option>
+                  <option value="year" data-i18n="freq_year">Anual</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="stats-banner">
+              <div class="stat-cell">
+                <span class="stat-lbl" data-i18n="lbl_rainfall_formula">Balance pluvial</span>
+                <div class="latex-box" id="prec_formula"></div>
+                <small id="prec_collection">NASA/GPM_L3/IMERG_V07</small>
+              </div>
+              <div class="stat-cell">
+                <span class="stat-lbl" data-i18n="lbl_sen_slope">Pendiente de Theil-Sen</span>
+                <div class="latex-box" id="prec_sen"></div>
+                <small>Estimador no paramétrico mediano</small>
+              </div>
+              <div class="stat-cell">
+                <span class="stat-lbl" data-i18n="lbl_kendall_tau">Estadístico Mann-Kendall</span>
+                <div class="latex-box" id="prec_tau"></div>
+                <small id="prec_pval"></small>
+              </div>
+              <div class="stat-cell">
+                <span class="stat-lbl" data-i18n="lbl_descriptive_stats">Estadísticos descriptivos</span>
+                <div class="latex-box" id="prec_mean"></div>
+                <small>Serie Histórica Completa</small>
+              </div>
+            </div>
+
+            <div class="interp-banner" id="prec_interp"></div>
+
+            <div class="chart-container" style="height:280px;">
+              <canvas id="chartPrecipitacion" aria-labelledby="precChartTitle"></canvas>
+            </div>
+          </div>
+
+          <div class="card" id="precAnomCard">
+            <div class="card-header">
+              <div>
+                <h2 class="card-title" id="precAnomChartTitle" data-i18n="prec_anom_title" data-editable="true">Anomalía Porcentual de Precipitación (%) frente a la Media Histórica</h2>
+                <p class="card-sub" data-i18n="prec_anom_desc">Barras azules indican superávit pluvial; barras rojas señalan déficit hídrico o estiaje severo en la cuenca de Ampay.</p>
+              </div>
+              <button class="icon-expand-btn" data-expand="precAnomCard" title="Agrandar tarjeta"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></button>
+            </div>
+            <div class="chart-container" style="height:260px;">
+              <canvas id="chartPrecAnomalia" aria-labelledby="precAnomChartTitle"></canvas>
+            </div>
+          </div>
+        </section>
+
+        <!-- ================================================================
+             PESTAÑA 7: FACTOR 5 - RADIACIÓN SOLAR
+             ================================================================ -->
+        <section class="tab-pane" id="tab-radiacion">
+          <div class="section-header">
+            <div>
+              <h1 data-i18n="rad_title" data-editable="true">Factor 5: Radiación Solar Incidente de Onda Corta</h1>
+              <p data-i18n="rad_desc">Flujo energético solar descendente disponible para el balance térmico e hidrológico de alta montaña (ERA5-Land + MODIS MCD18A1).</p>
+            </div>
+          </div>
+
+          <div class="card" id="radCardMain">
+            <div class="card-header">
+              <strong class="card-title">Flujo Radiativo Solar (2016–2026)</strong>
+              <button class="icon-expand-btn" data-expand="radCardMain" title="Agrandar tarjeta"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></button>
+            </div>
+            <div class="controls-grid">
+              <div class="control-group">
+                <label for="radVarSelect" data-i18n="lbl_select_var">Producto Satelital de Radiación:</label>
+                <select class="select-input" id="radVarSelect">
+                  <option value="RADIACION">ERA5-Land · Radiación Solar de Onda Corta (ECMWF)</option>
+                  <option value="RADIACION_NASA">MODIS MCD18A1 V062 · Radiación Descendente (NASA)</option>
+                </select>
+              </div>
+              <div class="control-group">
+                <label for="radDateStart" data-i18n="date_start">Desde</label>
+                <input type="date" id="radDateStart" data-range-date="start" class="text-input" value="2016-01-01" min="2016-01-01" max="2026-11-01" required>
+              </div>
+              <div class="control-group">
+                <label for="radDateEnd" data-i18n="date_end">Hasta</label>
+                <input type="date" id="radDateEnd" data-range-date="end" class="text-input" value="2026-11-01" min="2016-01-01" max="2026-11-01" required>
+              </div>
+              <div class="control-group">
+                <label for="radFreqSelect" data-i18n="lbl_select_freq">Frecuencia Temporal:</label>
+                <select class="select-input" id="radFreqSelect">
+                  <option value="month" data-i18n="freq_month">Mensual</option>
+                  <option value="quarter" data-i18n="freq_quarter">Trimestral</option>
+                  <option value="year" data-i18n="freq_year">Anual</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="stats-banner">
+              <div class="stat-cell">
+                <span class="stat-lbl" data-i18n="lbl_radiation_formula">Integración radiativa</span>
+                <div class="latex-box" id="rad_formula"></div>
+                <small id="rad_collection">ECMWF/ERA5_LAND/MONTHLY_AGGR</small>
+              </div>
+              <div class="stat-cell">
+                <span class="stat-lbl" data-i18n="lbl_sen_slope">Pendiente de Theil-Sen</span>
+                <div class="latex-box" id="rad_sen"></div>
+                <small>Estimador no paramétrico mediano</small>
+              </div>
+              <div class="stat-cell">
+                <span class="stat-lbl" data-i18n="lbl_kendall_tau">Estadístico Mann-Kendall</span>
+                <div class="latex-box" id="rad_tau"></div>
+                <small id="rad_pval"></small>
+              </div>
+              <div class="stat-cell">
+                <span class="stat-lbl" data-i18n="lbl_descriptive_stats">Estadísticos descriptivos</span>
+                <div class="latex-box" id="rad_mean"></div>
+                <small>Serie Histórica Completa</small>
+              </div>
+            </div>
+
+            <div class="interp-banner" id="rad_interp"></div>
+
+            <div class="chart-container">
+              <canvas id="chartRadiacion"></canvas>
+            </div>
+            <div class="chart-footer-meta" id="rad_footer"></div>
+          </div>
+        </section>
+
+        <!-- ================================================================
+             PESTAÑA 8: FACTOR 6 - RETROCESO GLACIAR Y CARGA DE DATOS/FOTOS
+             ================================================================ -->
+        <section class="tab-pane" id="tab-glaciar">
+          <div class="section-header">
+            <div>
+              <h1 data-i18n="glaciar_title" data-editable="true">Factor 6: Retroceso Glaciar Multitemporal y Carga de Datos de Campo</h1>
+              <p data-i18n="glaciar_desc">Comparación interactiva entre fechas de la superficie glaciar del Nevado Ampay (km² y ha), tasa de retroceso de Sen e incorporación de datos y fotografías.</p>
+            </div>
+          </div>
+
+          <div class="date-range no-print" role="group" aria-labelledby="glacRangeLabel">
+            <strong class="date-range-title" id="glacRangeLabel" data-i18n="date_range_title">Periodo de las series</strong>
+            <div class="control-group">
+              <label for="glacDateStart" data-i18n="date_start">Desde</label>
+              <input type="date" id="glacDateStart" data-range-date="start" class="text-input" value="2016-01-01" min="2016-01-01" max="2026-11-01" required>
+            </div>
+            <div class="control-group">
+              <label for="glacDateEnd" data-i18n="date_end">Hasta</label>
+              <input type="date" id="glacDateEnd" data-range-date="end" class="text-input" value="2026-11-01" min="2016-01-01" max="2026-11-01" required>
+            </div>
+          </div>
+
+          <div class="card" id="glacCardMain">
+            <div class="card-header">
+              <strong class="card-title" id="glacChartTitle" data-i18n="glac_series_title">Comparador Multitemporal de Superficie Glaciar (2016–2026)</strong>
+              <button class="icon-expand-btn" data-expand="glacCardMain" title="Agrandar tarjeta"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></button>
+            </div>
+            <div class="controls-grid">
+              <div class="control-group">
+                <label for="glacDateA" data-i18n="glaciar_date_a">Fecha Inicial (Línea Base A):</label>
+                <select class="select-input" id="glacDateA"></select>
+              </div>
+              <div class="control-group">
+                <label for="glacDateB" data-i18n="glaciar_date_b">Fecha de Comparación (Actual B):</label>
+                <select class="select-input" id="glacDateB"></select>
+              </div>
+              <div class="control-group" style="display:flex;align-items:flex-end;">
+                <button class="btn btn-primary" id="btnCompareGlaciar" style="width:100%;justify-content:center;" data-i18n="glaciar_btn_compare">Comparar Fechas</button>
+              </div>
+            </div>
+
+            <div class="kpi-row">
+              <div class="kpi-card cyan">
+                <span class="kpi-title" data-i18n="glaciar_area_a">Superficie en Fecha A</span>
+                <strong class="kpi-value num-tabular" id="glacValA">1.850 km²</strong>
+                <span class="kpi-delta info num-tabular" id="glacSubA">185.0 ha</span>
+              </div>
+              <div class="kpi-card blue">
+                <span class="kpi-title" data-i18n="glaciar_area_b">Superficie en Fecha B</span>
+                <strong class="kpi-value num-tabular" id="glacValB">0.412 km²</strong>
+                <span class="kpi-delta info num-tabular" id="glacSubB">41.2 ha</span>
+              </div>
+              <div class="kpi-card amber">
+                <span class="kpi-title" data-i18n="glaciar_delta_km2">Cambio Neto de Superficie</span>
+                <strong class="kpi-value num-tabular" id="glacDeltaVal">-1.438 km²</strong>
+                <span class="kpi-delta neg num-tabular" id="glacDeltaSub">-143.8 ha</span>
+              </div>
+              <div class="kpi-card purple">
+                <span class="kpi-title" data-i18n="glaciar_sen_rate">Tasa Estadística (Pendiente de Sen)</span>
+                <strong class="kpi-value num-tabular" id="glacSenVal">-0.0355 km²/año</strong>
+                <span class="kpi-delta neg num-tabular" id="glacSenSub">τ = -0.171 · p = 0.0126</span>
+              </div>
+            </div>
+
+            <div class="latex-box" id="glacLatexEq" style="width:100%;margin-bottom:12px;"></div>
+            <div class="interp-banner" id="glac_interp"></div>
+
+            <div class="chart-container">
+              <canvas id="chartGlaciar" aria-labelledby="glacChartTitle"></canvas>
+            </div>
+          </div>
+
+          <div class="card" id="uploadSectionCard">
+            <div class="card-header">
+              <div>
+                <h2 class="card-title" data-i18n="upload_section_title">Incorporación de Nuevos Datos (CSV 14 Columnas, GeoJSON y Fotografías de Campo)</h2>
+                <p class="card-sub">Permite subir mediciones de las lagunas Uspaccocha/Angascocha, nuevos polígonos o evidencia fotográfica.</p>
+              </div>
+              <div style="display:flex;gap:8px;flex-wrap:wrap;">
+                <button class="btn" id="btnDownloadTemplate" data-i18n="btn_download_template">Descargar Plantilla CSV (14 col)</button>
+                <button class="btn btn-primary" id="btnLoadSampleLaguna" data-i18n="btn_load_sample_laguna">Cargar Ejemplo Laguna Uspaccocha</button>
+              </div>
+            </div>
+
+            <div class="upload-grid">
+              <div style="background:rgba(6,16,26,0.75);border:1px solid var(--border-subtle);border-radius:10px;padding:14px;">
+                <h3 style="font-size:13px;color:var(--accent-teal);margin-bottom:6px;" data-i18n="upload_csv_title">1. Cargar Serie CSV (14 Columnas)</h3>
+                <p style="font-size:11.5px;color:var(--text-secondary);margin-bottom:10px;" data-i18n="upload_csv_desc">Valida automáticamente las 14 columnas obligatorias e integra los registros en los gráficos, tablas y mapa.</p>
+                <input type="file" id="inputUploadCsv" accept=".csv,text/csv" class="text-input">
+                <div id="csvUploadStatus" style="margin-top:8px;font-size:11px;color:#94b2c4;">Esquema: fecha, zona_id, variable, valor, unidad, estadistico, sensor, fuente, coleccion, resolucion_m, n_observaciones, cobertura_valida_pct, calidad, periodo_completo.</div>
+              </div>
+
+              <div style="background:rgba(6,16,26,0.75);border:1px solid var(--border-subtle);border-radius:10px;padding:14px;">
+                <h3 style="font-size:13px;color:var(--accent-cyan);margin-bottom:6px;" data-i18n="upload_geojson_title">2. Cargar Polígonos o Puntos GeoJSON</h3>
+                <p style="font-size:11.5px;color:var(--text-secondary);margin-bottom:10px;" data-i18n="upload_geojson_desc">Agrega nuevas delimitaciones de bosque, lagunas o parcelas directamente al Mapa SIG Interactivo.</p>
+                <input type="file" id="inputUploadGeojson" accept=".geojson,.json,application/geo+json,application/json" class="text-input">
+                <div id="geojsonUploadStatus" style="margin-top:8px;font-size:11px;color:#94b2c4;">Coordenadas geográficas WGS84 (EPSG:4326).</div>
+              </div>
+
+              <div style="background:rgba(6,16,26,0.75);border:1px solid var(--border-subtle);border-radius:10px;padding:14px;">
+                <h3 style="font-size:13px;color:var(--accent-emerald);margin-bottom:6px;" data-i18n="upload_photo_title">3. Registrar Fotografía o Evidencia de Campo</h3>
+                <p style="font-size:11.5px;color:var(--text-secondary);margin-bottom:8px;" data-i18n="upload_photo_desc">Sube fotografías del Santuario Nacional de Ampay con fecha, sector y descripción técnica.</p>
+                <input type="text" id="photoTitleInput" maxlength="140" placeholder="Título (ej. Monitoreo Laguna Uspaccocha)" class="text-input" style="margin-bottom:6px;">
+                <input type="text" id="photoSectorInput" maxlength="180" placeholder="Sector y altitud (ej. Uspaccocha 3,750 m)" class="text-input" style="margin-bottom:6px;">
+                <div style="display:flex;gap:6px;">
+                  <input type="file" id="inputUploadPhoto" accept="image/jpeg,image/png,image/webp,image/gif" class="text-input" style="flex:1;">
+                  <button type="button" class="btn btn-primary" id="btnAddPhoto" data-i18n="photo_save">Guardar foto</button>
+                </div>
+                <p class="card-sub" id="photoUploadStatus" role="status"></p>
+              </div>
+            </div>
+
+            <h3 style="font-size:13.5px;color:#fff;margin-top:16px;">Galería Fotográfica y Evidencia Documental del Santuario</h3>
+            <div class="photo-gallery" id="photoGalleryGrid"></div>
+          </div>
+        </section>
+
+        <!-- ================================================================
+             PESTAÑA 9: EXPLORADOR INTERACTIVO DE LA BASE DE DATOS (2016–2026)
+             ================================================================ -->
+        <section class="tab-pane" id="tab-bd">
+          <div class="section-header">
+            <div>
+              <h1 data-i18n="bd_title" data-editable="true">Explorador Interactivo de la Base de Datos Estandarizada (2016–2026)</h1>
+              <p data-i18n="bd_desc">Consulta los 14 campos y filtra por año, variable o calidad. También puedes agregar registros nuevos.</p>
+            </div>
+            <span class="stat-chip" id="dbCountBadge" style="font-size:11.5px;padding:5px 12px;">1,965 registros</span>
+          </div>
+
+          <div class="date-range no-print" role="group" aria-labelledby="dbRangeLabel">
+            <strong class="date-range-title" id="dbRangeLabel" data-i18n="date_range_title">Periodo de las series</strong>
+            <div class="control-group">
+              <label for="dbDateStart" data-i18n="date_start">Desde</label>
+              <input type="date" id="dbDateStart" data-range-date="start" class="text-input" value="2016-01-01" min="2016-01-01" max="2026-11-01" required>
+            </div>
+            <div class="control-group">
+              <label for="dbDateEnd" data-i18n="date_end">Hasta</label>
+              <input type="date" id="dbDateEnd" data-range-date="end" class="text-input" value="2026-11-01" min="2016-01-01" max="2026-11-01" required>
+            </div>
+          </div>
+
+          <div class="card" id="dbExplorerCard">
+            <div class="card-header">
+              <strong class="card-title" data-i18n="db_filters_title">Filtros de consulta multianual (2016–2026)</strong>
+              <button class="icon-expand-btn" data-expand="dbExplorerCard" title="Agrandar tabla a pantalla completa"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></button>
+            </div>
+
+            <div class="controls-grid">
+              <div class="control-group">
+                <label for="dbFilterYear">Filtrar por Año (2016–2026):</label>
+                <select class="select-input" id="dbFilterYear">
+                  <option value="ALL">Todos los años (2016 – 2026)</option>
+                  <option value="2026">2026</option>
+                  <option value="2025">2025</option>
+                  <option value="2024">2024</option>
+                  <option value="2023">2023</option>
+                  <option value="2022">2022</option>
+                  <option value="2021">2021</option>
+                  <option value="2020">2020</option>
+                  <option value="2019">2019</option>
+                  <option value="2018">2018</option>
+                  <option value="2017">2017</option>
+                  <option value="2016">2016</option>
+                </select>
+              </div>
+              <div class="control-group">
+                <label for="dbFilterVar">Filtrar por Variable:</label>
+                <select class="select-input" id="dbFilterVar">
+                  <option value="ALL">Todas las variables (5 factores)</option>
+                  <option value="NDVI">NDVI</option>
+                  <option value="SAVI">SAVI</option>
+                  <option value="NDMI">NDMI</option>
+                  <option value="EVI">EVI</option>
+                  <option value="NDSI">NDSI</option>
+                  <option value="Area_glaciar">Area_glaciar</option>
+                  <option value="MNDWI">MNDWI</option>
+                  <option value="LST_DIA">LST_DIA</option>
+                  <option value="LST_NOCHE">LST_NOCHE</option>
+                  <option value="T2M">T2M</option>
+                  <option value="PRECIPITACION">PRECIPITACION</option>
+                  <option value="RADIACION">RADIACION</option>
+                  <option value="RADIACION_NASA">RADIACION_NASA</option>
+                </select>
+              </div>
+              <div class="control-group">
+                <label for="dbFilterQuality">Filtrar por Calidad:</label>
+                <select class="select-input" id="dbFilterQuality">
+                  <option value="ALL">Todas (ALTA, PARCIAL, SIN_DATOS)</option>
+                  <option value="ALTA">ALTA</option>
+                  <option value="PARCIAL">PARCIAL</option>
+                  <option value="SIN_DATOS">SIN_DATOS</option>
+                  <option value="EDITADO_USUARIO">EDITADO_USUARIO</option>
+                </select>
+              </div>
+              <div class="control-group">
+                <label for="dbSearchInput">Búsqueda rápida (fecha, sensor, zona):</label>
+                <input type="text" id="dbSearchInput" class="text-input" placeholder="Ej. 2023-07, MODIS, USPACC01...">
+              </div>
+            </div>
+
+            <!-- Agregar nueva fila directamente desde la interfaz -->
+            <div style="background:rgba(5,14,24,0.8);border:1px solid var(--border-subtle);border-radius:9px;padding:10px 12px;margin-bottom:12px;display:flex;gap:8px;flex-wrap:wrap;align-items:flex-end;">
+              <div>
+                <label style="display:block;font-size:10px;color:#94b2c4;">Fecha</label>
+                <input type="date" id="newRowFecha" class="text-input" value="2026-11-01" style="width:135px;padding:5px 8px;">
+              </div>
+              <div>
+                <label style="display:block;font-size:10px;color:#94b2c4;">Zona ID</label>
+                <input type="text" id="newRowZona" class="text-input" value="AMPAY" style="width:95px;padding:5px 8px;">
+              </div>
+              <div>
+                <label style="display:block;font-size:10px;color:#94b2c4;">Variable</label>
+                <select id="newRowVar" class="select-input" style="width:135px;padding:5px 8px;">
+                  <option value="NDVI">NDVI</option>
+                  <option value="SAVI">SAVI</option>
+                  <option value="NDMI">NDMI</option>
+                  <option value="EVI">EVI</option>
+                  <option value="NDSI">NDSI</option>
+                  <option value="Area_glaciar">Area_glaciar</option>
+                  <option value="MNDWI">MNDWI</option>
+                  <option value="LST_DIA">LST_DIA</option>
+                  <option value="T2M">T2M</option>
+                  <option value="PRECIPITACION">PRECIPITACION</option>
+                  <option value="RADIACION">RADIACION</option>
+                </select>
+              </div>
+              <div>
+                <label style="display:block;font-size:10px;color:#94b2c4;">Valor Numérico</label>
+                <input type="number" step="0.0001" id="newRowVal" class="text-input" value="0.512" style="width:110px;padding:5px 8px;">
+              </div>
+              <div>
+                <label style="display:block;font-size:10px;color:#94b2c4;">Sensor</label>
+                <input type="text" id="newRowSensor" class="text-input" value="Sentinel-2" style="width:115px;padding:5px 8px;">
+              </div>
+              <button class="btn btn-primary" id="btnDbAddRow">+ Insertar Registro (14 col)</button>
+            </div>
+
+            <div class="data-table-wrap">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>1. fecha</th>
+                    <th>2. zona_id</th>
+                    <th>3. variable</th>
+                    <th data-i18n="db_value_column">4. Valor</th>
+                    <th>5. unidad</th>
+                    <th>6. estadistico</th>
+                    <th>7. sensor</th>
+                    <th>8. fuente</th>
+                    <th>9. coleccion</th>
+                    <th>10. res_m</th>
+                    <th>11. n_obs</th>
+                    <th>12. cob_%</th>
+                    <th>13. calidad</th>
+                    <th>14. completo</th>
+                  </tr>
+                </thead>
+                <tbody id="dbExplorerBody"></tbody>
+              </table>
+            </div>
+
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-top:10px;">
+              <small style="color:#94b2c4;" data-i18n="db_readonly_hint">Los valores de la tabla son de solo lectura.</small>
+              <div style="display:flex;gap:8px;">
+                <button class="btn" id="btnDbPrev">← Anterior</button>
+                <button class="btn" id="btnDbNext">Siguiente →</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ================================================================
+             PESTAÑA 10: REPORTE SITUACIONAL (CON TENDENCIAS E IMPRESIÓN PDF)
+             ================================================================ -->
+        <section class="tab-pane" id="tab-reporte">
+          <div class="section-header">
+            <div>
+              <h1 data-i18n="reporte_title" data-editable="true">Reporte Satelital</h1>
+              <p data-i18n="reporte_desc">Boletín ambiental con indicadores, gráficas de tendencia y resultados de Mann-Kendall y Theil-Sen.</p>
+            </div>
+            <div class="no-print" style="display:flex;gap:8px;">
+              <button class="btn" id="btnRefreshReport" data-i18n="btn_refresh_report">Actualizar Datos del Reporte</button>
+              <button class="btn btn-primary" id="btnPrintReport" data-i18n="btn_print_report">Imprimir / Guardar en PDF</button>
+            </div>
+          </div>
+
+          <div class="date-range no-print" role="group" aria-labelledby="reportRangeLabel">
+            <strong class="date-range-title" id="reportRangeLabel" data-i18n="date_range_title">Periodo de las series</strong>
+            <div class="control-group">
+              <label for="reportDateStart" data-i18n="date_start">Desde</label>
+              <input type="date" id="reportDateStart" data-range-date="start" class="text-input" value="2016-01-01" min="2016-01-01" max="2026-11-01" required>
+            </div>
+            <div class="control-group">
+              <label for="reportDateEnd" data-i18n="date_end">Hasta</label>
+              <input type="date" id="reportDateEnd" data-range-date="end" class="text-input" value="2026-11-01" min="2016-01-01" max="2026-11-01" required>
+            </div>
+          </div>
+
+          <div class="card" id="reportMainCard">
+            <div class="report-heading">
+              <img class="report-logo" src="assets/delta-club.jpeg" alt="Delta Club" width="64" height="64">
+              <div>
+                <h2 class="report-main-title" style="font-size:16.5px;color:#fff;" data-editable="true">INFORME TÉCNICO DE MONITOREO AMBIENTAL Y SATELITAL MULTICRITERIO</h2>
+                <p style="font-size:12px;color:#94b2c4;margin-top:4px;" data-editable="true">
+                  <b>Área Natural Protegida:</b> Santuario Nacional de Ampay (SNA) · Tamburco / Abancay, Apurímac, Perú<br>
+                  <b>Institución:</b> Universidad Nacional José María Arguedas (UNAJMA) · Equipo DELTA CLUB<br>
+                  <b>Fecha de Emisión:</b> <span id="reportEmissionDate">15 de noviembre de 2026</span> · <b>Esquema:</b> 14 Columnas GEE (Sentinel-2 MSI, MODIS, ERA5-Land, GPM IMERG)
+                </p>
+                <p class="report-period"><strong data-i18n="report_period">Periodo analizado</strong> <span id="reportDateRange"></span></p>
+              </div>
+              <button class="icon-expand-btn no-print" data-expand="reportMainCard" title="Agrandar reporte"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></button>
+            </div>
+
+            <div class="data-table-wrap report-table-wrap" style="max-height:none;">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Sistema Climático / Variable</th>
+                    <th>Sensor y Colección GEE</th>
+                    <th>Último dato y media del periodo</th>
+                    <th data-i18n="report_stats_column">Parámetros de Sen y Mann-Kendall</th>
+                    <th>Diagnóstico Estadístico (α = 0.05)</th>
+                  </tr>
+                </thead>
+                <tbody id="reportTableBody"></tbody>
+              </table>
+            </div>
+
+            <section class="report-trends" aria-labelledby="reportTrendsTitle">
+              <h3 class="card-title" id="reportTrendsTitle" data-i18n="report_trends_title">Tendencias mensuales</h3>
+              <div class="report-trend-grid" id="reportTrendGrid"></div>
+            </section>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <dialog class="modal-content chart-export-dialog no-print" id="chartExportDialog" aria-labelledby="chartExportTitle">
+    <form method="dialog">
+      <h2 class="card-title" id="chartExportTitle" data-i18n="btn_export_chart">Exportar gráfico</h2>
+      <div class="control-group">
+        <label for="chartExportSelect" data-i18n="chart_export_choose">Gráfico de esta sección</label>
+        <select class="select-input" id="chartExportSelect"></select>
+      </div>
+      <div class="chart-export-actions">
+        <button class="btn" type="submit" value="cancel" data-i18n="chart_export_cancel">Cancelar</button>
+        <button class="btn btn-primary" type="submit" value="download" data-i18n="chart_export_download">Descargar PNG</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- MODAL 1: GLOSARIO CIENTÍFICO -->
+  <div class="modal-backdrop" id="glossaryModal" role="dialog" aria-modal="true">
+    <div class="modal-content">
+      <div class="card-header">
+        <div>
+          <h2 class="card-title" data-i18n="glossary_title">Glosario científico de índices espectrales y pruebas estadísticas</h2>
+          <p class="card-sub" data-i18n="glossary_sub">Ecuaciones de los índices satelitales y las pruebas estadísticas.</p>
+        </div>
+        <button class="btn btn-close-modal">Cerrar</button>
+      </div>
+      <div class="glossary-grid" id="glossaryGrid"></div>
+    </div>
+  </div>
+
+  <!-- MODAL 2: CONEXIÓN SEGURA CON GOOGLE EARTH ENGINE -->
+  <div class="modal-backdrop" id="geeModal" role="dialog" aria-modal="true">
+    <div class="modal-content" style="max-width:680px;">
+      <div class="card-header">
+        <div>
+          <h2 class="card-title">Conexión con Google Earth Engine (Modo Local vs. Modo Online)</h2>
+          <p class="card-sub">Arquitectura cliente-servidor segura sin exponer claves privadas en el navegador.</p>
+        </div>
+        <button class="btn btn-close-modal">Cerrar</button>
+      </div>
+      <div style="font-size:12.5px;color:var(--text-primary);line-height:1.6;">
+        <p style="margin-bottom:10px;">
+          El Geoportal opera por defecto en <b>Modo Local (Contingencia)</b> con la base completa 2016–2026 de <code>Base_datos.zip</code> (14 columnas) y <code>ampay_ecosistemas.geojson</code>.
+        </p>
+        <p style="margin-bottom:10px;">
+          Para activar el <b>Modo Online con Google Earth Engine</b> en Windows, ejecuta en la carpeta del proyecto:
+        </p>
+        <pre style="background:#040c14;border:1px solid var(--border-subtle);padding:12px;border-radius:8px;color:#2dd4bf;font-size:11.5px;overflow-x:auto;margin-bottom:12px;">pip install flask flask-cors earthengine-api pandas numpy scipy
+earthengine authenticate
+python server/app.py</pre>
+        <p style="color:#94b2c4;font-size:11.5px;">
+          Abre <code>http://127.0.0.1:5000</code> y pulsa <b>Conectar GEE</b> para comprobar el acceso al proyecto. Las gráficas se alimentan de la base local y los CSV que cargues.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <dialog class="image-preview" id="imagePreview" aria-labelledby="imagePreviewTitle">
+    <div class="image-preview-header">
+      <strong id="imagePreviewTitle"></strong>
+      <form method="dialog"><button class="btn" type="submit" data-i18n="image_close">Cerrar</button></form>
+    </div>
+    <img id="imagePreviewImage" alt="">
+  </dialog>
+
+  <div class="toast-msg" id="toastMsg" role="status" aria-live="polite"></div>
+
+  <script src="assets/vendor/leaflet/leaflet.js"></script>
+  <script src="assets/vendor/chart/chart.umd.js"></script>
+  <script src="assets/vendor/katex/katex.min.js"></script>
+  <script src="js/embedded_data.js"></script>
+  <script src="analisis/Mapas_Ampay_Jupyter/salidas/2026-08/geoportal/capas_ampay.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

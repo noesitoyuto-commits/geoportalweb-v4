@@ -1,0 +1,8 @@
+{
+  "pp_chirps_mes": {
+    "fuente": "UCSB Climate Hazards Center · CHIRPS v3.0 final / USGS",
+    "periodo": "2026-08",
+    "metodo": "Producto mensual final. Recorte regional en la cuadrícula original de 0.05°.",
+    "url": "https://edcintl.cr.usgs.gov/downloads/sciweb1/shared/fews/web/global/monthly/chirps/final/downloads/monthly/chirps-v3.0.2026.08.tif"
+  }
+}

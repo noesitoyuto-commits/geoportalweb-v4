@@ -1,0 +1,890 @@
+{
+  "area": "Distrito de Tamburco",
+  "capas": [
+    {
+      "id": "rgb",
+      "nombre": "Color natural",
+      "tipo": "raster",
+      "grupo": "Imágenes Sentinel-2",
+      "fuente": "Copernicus Sentinel-2 L2A / Element 84 Earth Search",
+      "periodo": "2026-08",
+      "unidad": "",
+      "resolucion": "10 m",
+      "metodo": "Canales B4/B3/B2 del compuesto de reflectancia.",
+      "rango": null,
+      "cmap": null,
+      "clases": null,
+      "colores": [],
+      "cobertura_pct": 96.479,
+      "archivo": "rgb.png",
+      "geotiff": "geotiff/rgb.tif",
+      "bounds": [
+        [
+          -13.631119069787452,
+          -72.95237030214216
+        ],
+        [
+          -13.539068888035473,
+          -72.8209201009407
+        ]
+      ],
+      "regional": false
+    },
+    {
+      "id": "falso_color",
+      "nombre": "Falso color infrarrojo",
+      "tipo": "raster",
+      "grupo": "Imágenes Sentinel-2",
+      "fuente": "Copernicus Sentinel-2 L2A / Element 84 Earth Search",
+      "periodo": "2026-08",
+      "unidad": "",
+      "resolucion": "10 m",
+      "metodo": "Canales B8/B4/B3 del compuesto de reflectancia.",
+      "rango": null,
+      "cmap": null,
+      "clases": null,
+      "colores": [],
+      "cobertura_pct": 96.479,
+      "archivo": "falso_color.png",
+      "geotiff": "geotiff/falso_color.tif",
+      "bounds": [
+        [
+          -13.631119069787452,
+          -72.95237030214216
+        ],
+        [
+          -13.539068888035473,
+          -72.8209201009407
+        ]
+      ],
+      "regional": false
+    },
+    {
+      "id": "falso_color_swir",
+      "nombre": "Falso color SWIR",
+      "tipo": "raster",
+      "grupo": "Imágenes Sentinel-2",
+      "fuente": "Copernicus Sentinel-2 L2A / Element 84 Earth Search",
+      "periodo": "2026-08",
+      "unidad": "",
+      "resolucion": "20 m",
+      "metodo": "Canales B12/B8A/B4 del compuesto de reflectancia.",
+      "rango": null,
+      "cmap": null,
+      "clases": null,
+      "colores": [],
+      "cobertura_pct": 96.479,
+      "archivo": "falso_color_swir.png",
+      "geotiff": "geotiff/falso_color_swir.tif",
+      "bounds": [
+        [
+          -13.631029106627805,
+          -72.95237030214216
+        ],
+        [
+          -13.539068888035473,
+          -72.8209201009407
+        ]
+      ],
+      "regional": false
+    },
+    {
+      "id": "ndvi",
+      "nombre": "NDVI · vigor de la vegetación",
+      "tipo": "raster",
+      "grupo": "Vegetación",
+      "fuente": "Copernicus Sentinel-2 L2A / Element 84 Earth Search",
+      "periodo": "2026-08",
+      "unidad": "Índice",
+      "resolucion": "10 m",
+      "metodo": "Índice sobre compuesto de mediana de reflectancia L2A; máscara SCL.",
+      "rango": [
+        -0.2,
+        0.85
+      ],
+      "cmap": "YlGn",
+      "clases": null,
+      "colores": [
+        "#ffffe5",
+        "#edf8b2",
+        "#bce395",
+        "#77c679",
+        "#379e54",
+        "#0b713b",
+        "#004529"
+      ],
+      "cobertura_pct": 96.479,
+      "archivo": "ndvi.png",
+      "geotiff": "geotiff/ndvi.tif",
+      "bounds": [
+        [
+          -13.631119069787452,
+          -72.95237030214216
+        ],
+        [
+          -13.539068888035473,
+          -72.8209201009407
+        ]
+      ],
+      "regional": false
+    },
+    {
+      "id": "savi",
+      "nombre": "SAVI · vegetación con ajuste al suelo",
+      "tipo": "raster",
+      "grupo": "Vegetación",
+      "fuente": "Copernicus Sentinel-2 L2A / Element 84 Earth Search",
+      "periodo": "2026-08",
+      "unidad": "Índice",
+      "resolucion": "10 m",
+      "metodo": "Índice sobre compuesto de mediana de reflectancia L2A; máscara SCL.",
+      "rango": [
+        -0.15,
+        0.65
+      ],
+      "cmap": "YlGn",
+      "clases": null,
+      "colores": [
+        "#ffffe5",
+        "#edf8b2",
+        "#bce395",
+        "#77c679",
+        "#379e54",
+        "#0b713b",
+        "#004529"
+      ],
+      "cobertura_pct": 96.479,
+      "archivo": "savi.png",
+      "geotiff": "geotiff/savi.tif",
+      "bounds": [
+        [
+          -13.631119069787452,
+          -72.95237030214216
+        ],
+        [
+          -13.539068888035473,
+          -72.8209201009407
+        ]
+      ],
+      "regional": false
+    },
+    {
+      "id": "evi",
+      "nombre": "EVI · índice mejorado de vegetación",
+      "tipo": "raster",
+      "grupo": "Vegetación",
+      "fuente": "Copernicus Sentinel-2 L2A / Element 84 Earth Search",
+      "periodo": "2026-08",
+      "unidad": "Índice",
+      "resolucion": "10 m",
+      "metodo": "Índice sobre compuesto de mediana de reflectancia L2A; máscara SCL.",
+      "rango": [
+        -0.15,
+        0.7
+      ],
+      "cmap": "YlGn",
+      "clases": null,
+      "colores": [
+        "#ffffe5",
+        "#edf8b2",
+        "#bce395",
+        "#77c679",
+        "#379e54",
+        "#0b713b",
+        "#004529"
+      ],
+      "cobertura_pct": 96.04,
+      "archivo": "evi.png",
+      "geotiff": "geotiff/evi.tif",
+      "bounds": [
+        [
+          -13.631119069787452,
+          -72.95237030214216
+        ],
+        [
+          -13.539068888035473,
+          -72.8209201009407
+        ]
+      ],
+      "regional": false
+    },
+    {
+      "id": "ndmi",
+      "nombre": "NDMI · humedad de la vegetación",
+      "tipo": "raster",
+      "grupo": "Vegetación",
+      "fuente": "Copernicus Sentinel-2 L2A / Element 84 Earth Search",
+      "periodo": "2026-08",
+      "unidad": "Índice",
+      "resolucion": "20 m",
+      "metodo": "Índice sobre compuesto de mediana de reflectancia L2A; máscara SCL.",
+      "rango": [
+        -0.6,
+        0.6
+      ],
+      "cmap": "BrBG",
+      "clases": null,
+      "colores": [
+        "#543005",
+        "#ad7021",
+        "#e7cf94",
+        "#f4f5f5",
+        "#98d7cd",
+        "#23867e",
+        "#003c30"
+      ],
+      "cobertura_pct": 96.479,
+      "archivo": "ndmi.png",
+      "geotiff": "geotiff/ndmi.tif",
+      "bounds": [
+        [
+          -13.631029106627805,
+          -72.95237030214216
+        ],
+        [
+          -13.539068888035473,
+          -72.8209201009407
+        ]
+      ],
+      "regional": false
+    },
+    {
+      "id": "ndre",
+      "nombre": "NDRE · respuesta del borde rojo",
+      "tipo": "raster",
+      "grupo": "Vegetación",
+      "fuente": "Copernicus Sentinel-2 L2A / Element 84 Earth Search",
+      "periodo": "2026-08",
+      "unidad": "Índice",
+      "resolucion": "20 m",
+      "metodo": "Índice sobre compuesto de mediana de reflectancia L2A; máscara SCL.",
+      "rango": [
+        -0.1,
+        0.55
+      ],
+      "cmap": "YlGnBu",
+      "clases": null,
+      "colores": [
+        "#ffffd9",
+        "#e1f3b2",
+        "#97d6b9",
+        "#40b5c4",
+        "#1f80b8",
+        "#24419a",
+        "#081d58"
+      ],
+      "cobertura_pct": 96.479,
+      "archivo": "ndre.png",
+      "geotiff": "geotiff/ndre.tif",
+      "bounds": [
+        [
+          -13.631029106627805,
+          -72.95237030214216
+        ],
+        [
+          -13.539068888035473,
+          -72.8209201009407
+        ]
+      ],
+      "regional": false
+    },
+    {
+      "id": "ndwi",
+      "nombre": "NDWI · contraste de agua y tierra",
+      "tipo": "raster",
+      "grupo": "Agua y criósfera",
+      "fuente": "Copernicus Sentinel-2 L2A / Element 84 Earth Search",
+      "periodo": "2026-08",
+      "unidad": "Índice",
+      "resolucion": "10 m",
+      "metodo": "Índice sobre compuesto de mediana de reflectancia L2A; máscara SCL.",
+      "rango": [
+        -0.5,
+        0.5
+      ],
+      "cmap": "BrBG",
+      "clases": null,
+      "colores": [
+        "#543005",
+        "#ad7021",
+        "#e7cf94",
+        "#f4f5f5",
+        "#98d7cd",
+        "#23867e",
+        "#003c30"
+      ],
+      "cobertura_pct": 96.479,
+      "archivo": "ndwi.png",
+      "geotiff": "geotiff/ndwi.tif",
+      "bounds": [
+        [
+          -13.631119069787452,
+          -72.95237030214216
+        ],
+        [
+          -13.539068888035473,
+          -72.8209201009407
+        ]
+      ],
+      "regional": false
+    },
+    {
+      "id": "mndwi",
+      "nombre": "MNDWI · agua superficial",
+      "tipo": "raster",
+      "grupo": "Agua y criósfera",
+      "fuente": "Copernicus Sentinel-2 L2A / Element 84 Earth Search",
+      "periodo": "2026-08",
+      "unidad": "Índice",
+      "resolucion": "20 m",
+      "metodo": "Verde/SWIR1; excluye nieve candidata mayoritaria.",
+      "rango": [
+        -0.6,
+        0.6
+      ],
+      "cmap": "BrBG",
+      "clases": null,
+      "colores": [
+        "#543005",
+        "#ad7021",
+        "#e7cf94",
+        "#f4f5f5",
+        "#98d7cd",
+        "#23867e",
+        "#003c30"
+      ],
+      "cobertura_pct": 95.618,
+      "archivo": "mndwi.png",
+      "geotiff": "geotiff/mndwi.tif",
+      "bounds": [
+        [
+          -13.631029106627805,
+          -72.95237030214216
+        ],
+        [
+          -13.539068888035473,
+          -72.8209201009407
+        ]
+      ],
+      "regional": false
+    },
+    {
+      "id": "ndsi",
+      "nombre": "NDSI · contraste de nieve",
+      "tipo": "raster",
+      "grupo": "Agua y criósfera",
+      "fuente": "Copernicus Sentinel-2 L2A / Element 84 Earth Search",
+      "periodo": "2026-08",
+      "unidad": "Índice",
+      "resolucion": "20 m",
+      "metodo": "Verde/SWIR1; excluye agua candidata mayoritaria.",
+      "rango": [
+        -0.6,
+        0.8
+      ],
+      "cmap": "RdBu",
+      "clases": null,
+      "colores": [
+        "#67001f",
+        "#c94741",
+        "#f7b799",
+        "#f6f7f7",
+        "#a7d0e4",
+        "#3783bb",
+        "#053061"
+      ],
+      "cobertura_pct": 96.479,
+      "archivo": "ndsi.png",
+      "geotiff": "geotiff/ndsi.tif",
+      "bounds": [
+        [
+          -13.631029106627805,
+          -72.95237030214216
+        ],
+        [
+          -13.539068888035473,
+          -72.8209201009407
+        ]
+      ],
+      "regional": false
+    },
+    {
+      "id": "observaciones",
+      "nombre": "Días válidos por píxel",
+      "tipo": "raster",
+      "grupo": "Calidad",
+      "fuente": "Copernicus Sentinel-2 L2A / Element 84 Earth Search",
+      "periodo": "2026-08",
+      "unidad": "Días",
+      "resolucion": "20 m",
+      "metodo": "Días con SCL y bandas válidas.",
+      "rango": [
+        0,
+        3
+      ],
+      "cmap": "magma",
+      "clases": null,
+      "colores": [
+        "#000004",
+        "#2c115f",
+        "#721f81",
+        "#b73779",
+        "#f1605d",
+        "#feb078",
+        "#fcfdbf"
+      ],
+      "cobertura_pct": 100.0,
+      "archivo": "observaciones.png",
+      "geotiff": "geotiff/observaciones.tif",
+      "bounds": [
+        [
+          -13.631029106627805,
+          -72.95237030214216
+        ],
+        [
+          -13.539068888035473,
+          -72.8209201009407
+        ]
+      ],
+      "regional": false
+    },
+    {
+      "id": "frecuencia_agua",
+      "nombre": "Frecuencia de agua candidata",
+      "tipo": "raster",
+      "grupo": "Agua y criósfera",
+      "fuente": "Copernicus Sentinel-2 L2A / Element 84 Earth Search",
+      "periodo": "2026-08",
+      "unidad": "%",
+      "resolucion": "20 m",
+      "metodo": "Detecciones/observaciones válidas · SCL=6, NDWI>0 y MNDWI>0 · mínimo 2 días válidos.",
+      "rango": [
+        0,
+        100
+      ],
+      "cmap": "Blues",
+      "clases": null,
+      "colores": [
+        "#f7fbff",
+        "#d6e6f4",
+        "#abd0e6",
+        "#6aaed6",
+        "#3787c0",
+        "#105ba4",
+        "#08306b"
+      ],
+      "cobertura_pct": 87.058,
+      "archivo": "frecuencia_agua.png",
+      "geotiff": "geotiff/frecuencia_agua.tif",
+      "bounds": [
+        [
+          -13.631029106627805,
+          -72.95237030214216
+        ],
+        [
+          -13.539068888035473,
+          -72.8209201009407
+        ]
+      ],
+      "regional": false
+    },
+    {
+      "id": "poligonos_agua",
+      "nombre": "Agua candidata",
+      "grupo": "Agua y criósfera",
+      "tipo": "vector",
+      "fuente": "Copernicus Sentinel-2 L2A / Element 84 Earth Search",
+      "periodo": "2026-08",
+      "unidad": "ha",
+      "resolucion": "20 m",
+      "archivo": "poligonos_agua.geojson",
+      "color": "#0277bd",
+      "n_poligonos": 0,
+      "metodo": "≥50 % de observaciones válidas, ≥2 detecciones, polígonos ≥0.120 ha."
+    },
+    {
+      "id": "frecuencia_nieve",
+      "nombre": "Frecuencia de nieve o hielo candidatos",
+      "tipo": "raster",
+      "grupo": "Agua y criósfera",
+      "fuente": "Copernicus Sentinel-2 L2A / Element 84 Earth Search",
+      "periodo": "2026-08",
+      "unidad": "%",
+      "resolucion": "20 m",
+      "metodo": "Detecciones/observaciones válidas · SCL=11, NDSI≥0.40 y verde≥0.12 · mínimo 2 días válidos.",
+      "rango": [
+        0,
+        100
+      ],
+      "cmap": "PuBu",
+      "clases": null,
+      "colores": [
+        "#fff7fb",
+        "#e3e0ee",
+        "#b4c4df",
+        "#73a9cf",
+        "#2685bb",
+        "#046198",
+        "#023858"
+      ],
+      "cobertura_pct": 87.058,
+      "archivo": "frecuencia_nieve.png",
+      "geotiff": "geotiff/frecuencia_nieve.tif",
+      "bounds": [
+        [
+          -13.631029106627805,
+          -72.95237030214216
+        ],
+        [
+          -13.539068888035473,
+          -72.8209201009407
+        ]
+      ],
+      "regional": false
+    },
+    {
+      "id": "poligonos_nieve",
+      "nombre": "Nieve o hielo candidatos",
+      "grupo": "Agua y criósfera",
+      "tipo": "vector",
+      "fuente": "Copernicus Sentinel-2 L2A / Element 84 Earth Search",
+      "periodo": "2026-08",
+      "unidad": "ha",
+      "resolucion": "20 m",
+      "archivo": "poligonos_nieve.geojson",
+      "color": "#8fc8ff",
+      "n_poligonos": 8,
+      "metodo": "≥50 % de observaciones válidas, ≥2 detecciones, polígonos ≥0.120 ha."
+    },
+    {
+      "id": "cambio_ndvi",
+      "nombre": "Cambio de NDVI",
+      "tipo": "raster",
+      "grupo": "Cambios",
+      "fuente": "Copernicus Sentinel-2 L2A / Element 84 Earth Search",
+      "periodo": "2020-08 → 2026-08",
+      "unidad": "Δ del índice",
+      "resolucion": "10 m",
+      "metodo": "Reciente menos anterior; mismo mes y ≥2 días válidos en ambos.",
+      "rango": [
+        -0.4,
+        0.4
+      ],
+      "cmap": "PuOr",
+      "clases": null,
+      "colores": [
+        "#7f3b08",
+        "#d0730f",
+        "#fdc57f",
+        "#f6f6f7",
+        "#bfbbda",
+        "#70589f",
+        "#2d004b"
+      ],
+      "cobertura_pct": 75.157,
+      "archivo": "cambio_ndvi.png",
+      "geotiff": "geotiff/cambio_ndvi.tif",
+      "bounds": [
+        [
+          -13.631119069787452,
+          -72.95237030214216
+        ],
+        [
+          -13.539068888035473,
+          -72.8209201009407
+        ]
+      ],
+      "regional": false
+    },
+    {
+      "id": "cambio_ndmi",
+      "nombre": "Cambio de NDMI",
+      "tipo": "raster",
+      "grupo": "Cambios",
+      "fuente": "Copernicus Sentinel-2 L2A / Element 84 Earth Search",
+      "periodo": "2020-08 → 2026-08",
+      "unidad": "Δ del índice",
+      "resolucion": "20 m",
+      "metodo": "Reciente menos anterior; mismo mes y ≥2 días válidos en ambos.",
+      "rango": [
+        -0.4,
+        0.4
+      ],
+      "cmap": "PuOr",
+      "clases": null,
+      "colores": [
+        "#7f3b08",
+        "#d0730f",
+        "#fdc57f",
+        "#f6f6f7",
+        "#bfbbda",
+        "#70589f",
+        "#2d004b"
+      ],
+      "cobertura_pct": 75.155,
+      "archivo": "cambio_ndmi.png",
+      "geotiff": "geotiff/cambio_ndmi.tif",
+      "bounds": [
+        [
+          -13.631029106627805,
+          -72.95237030214216
+        ],
+        [
+          -13.539068888035473,
+          -72.8209201009407
+        ]
+      ],
+      "regional": false
+    },
+    {
+      "id": "elevacion",
+      "nombre": "Elevación",
+      "tipo": "raster",
+      "grupo": "Relieve",
+      "fuente": "Copernicus DEM GLO-30 / AWS Open Data",
+      "periodo": "DEM de referencia",
+      "unidad": "m s. n. m.",
+      "resolucion": "≈30 m",
+      "metodo": "",
+      "rango": [
+        2630.63310546875,
+        5006.933935546875
+      ],
+      "cmap": "terrain",
+      "clases": null,
+      "colores": [
+        "#333399",
+        "#00a0e8",
+        "#55dd77",
+        "#fefe98",
+        "#aa926b",
+        "#ab938e",
+        "#ffffff"
+      ],
+      "cobertura_pct": 100.0,
+      "archivo": "elevacion.png",
+      "geotiff": "geotiff/elevacion.tif",
+      "bounds": [
+        [
+          -13.631831675036961,
+          -72.9530222346764
+        ],
+        [
+          -13.53843075199377,
+          -72.82027455767864
+        ]
+      ],
+      "regional": false
+    },
+    {
+      "id": "pendiente",
+      "nombre": "Pendiente del terreno",
+      "tipo": "raster",
+      "grupo": "Relieve",
+      "fuente": "Copernicus DEM GLO-30 / AWS Open Data",
+      "periodo": "DEM de referencia",
+      "unidad": "°",
+      "resolucion": "≈30 m",
+      "metodo": "Gradiente del DEM en UTM.",
+      "rango": [
+        0,
+        55
+      ],
+      "cmap": "YlOrBr",
+      "clases": null,
+      "colores": [
+        "#ffffe5",
+        "#fff1ae",
+        "#fece65",
+        "#fe9829",
+        "#e1640e",
+        "#a93c03",
+        "#662506"
+      ],
+      "cobertura_pct": 100.0,
+      "archivo": "pendiente.png",
+      "geotiff": "geotiff/pendiente.tif",
+      "bounds": [
+        [
+          -13.631831675036961,
+          -72.9530222346764
+        ],
+        [
+          -13.53843075199377,
+          -72.82027455767864
+        ]
+      ],
+      "regional": false
+    },
+    {
+      "id": "orientacion",
+      "nombre": "Orientación de laderas",
+      "tipo": "raster",
+      "grupo": "Relieve",
+      "fuente": "Copernicus DEM GLO-30 / AWS Open Data",
+      "periodo": "DEM de referencia",
+      "unidad": "Sector",
+      "resolucion": "≈30 m",
+      "metodo": "Se excluyen pendientes menores de 1°.",
+      "rango": [
+        -0.5,
+        7.5
+      ],
+      "cmap": "twilight",
+      "clases": [
+        "N",
+        "NE",
+        "E",
+        "SE",
+        "S",
+        "SO",
+        "O",
+        "NO"
+      ],
+      "colores": [
+        "#e2d9e2",
+        "#95b5c7",
+        "#6276ba",
+        "#592a8f",
+        "#2f1436",
+        "#741e4f",
+        "#b25652",
+        "#cca389"
+      ],
+      "cobertura_pct": 99.956,
+      "archivo": "orientacion.png",
+      "geotiff": "geotiff/orientacion.tif",
+      "bounds": [
+        [
+          -13.631831675036961,
+          -72.9530222346764
+        ],
+        [
+          -13.53843075199377,
+          -72.82027455767864
+        ]
+      ],
+      "regional": false
+    },
+    {
+      "id": "sombreado",
+      "nombre": "Sombreado del relieve",
+      "tipo": "raster",
+      "grupo": "Relieve",
+      "fuente": "Copernicus DEM GLO-30 / AWS Open Data",
+      "periodo": "DEM de referencia",
+      "unidad": "Luz relativa (%)",
+      "resolucion": "≈30 m",
+      "metodo": "Iluminación simulada de azimut 315° y altura 45°.",
+      "rango": [
+        0,
+        100
+      ],
+      "cmap": "gray",
+      "clases": null,
+      "colores": [
+        "#000000",
+        "#2a2a2a",
+        "#555555",
+        "#808080",
+        "#aaaaaa",
+        "#d5d5d5",
+        "#ffffff"
+      ],
+      "cobertura_pct": 100.0,
+      "archivo": "sombreado.png",
+      "geotiff": "geotiff/sombreado.tif",
+      "bounds": [
+        [
+          -13.631831675036961,
+          -72.9530222346764
+        ],
+        [
+          -13.53843075199377,
+          -72.82027455767864
+        ]
+      ],
+      "regional": false
+    },
+    {
+      "id": "agua_historica",
+      "nombre": "Ocurrencia histórica de agua",
+      "tipo": "raster",
+      "grupo": "Agua y criósfera",
+      "fuente": "Source: EC JRC/Google · Global Surface Water v1.5",
+      "periodo": "1984–2024",
+      "unidad": "%",
+      "resolucion": "≈30 m",
+      "metodo": "Ocurrencia positiva de agua en Landsat; la visualización muestra celdas con detección.",
+      "rango": [
+        0,
+        100
+      ],
+      "cmap": "Blues",
+      "clases": null,
+      "colores": [
+        "#f7fbff",
+        "#d6e6f4",
+        "#abd0e6",
+        "#6aaed6",
+        "#3787c0",
+        "#105ba4",
+        "#08306b"
+      ],
+      "cobertura_pct": 0.104,
+      "archivo": "agua_historica.png",
+      "geotiff": "geotiff/agua_historica.tif",
+      "bounds": [
+        [
+          -13.63103113614537,
+          -72.95218403507717
+        ],
+        [
+          -13.539251212406283,
+          -72.82110454162944
+        ]
+      ],
+      "regional": false
+    },
+    {
+      "id": "pp_chirps_mes",
+      "nombre": "Precipitación mensual CHIRPS",
+      "tipo": "raster",
+      "grupo": "Clima regional",
+      "fuente": "UCSB Climate Hazards Center · CHIRPS v3.0 final / USGS",
+      "periodo": "2026-08",
+      "unidad": "mm/mes",
+      "resolucion": "0.05° (≈5.5 km)",
+      "metodo": "Producto mensual final. Recorte regional en la cuadrícula original de 0.05°.",
+      "rango": [
+        1.33736656665802,
+        103.84268356323244
+      ],
+      "cmap": "YlGnBu",
+      "clases": null,
+      "colores": [
+        "#ffffd9",
+        "#e1f3b2",
+        "#97d6b9",
+        "#40b5c4",
+        "#1f80b8",
+        "#24419a",
+        "#081d58"
+      ],
+      "cobertura_pct": 100.0,
+      "archivo": "pp_chirps_mes.png",
+      "geotiff": "geotiff/pp_chirps_mes.tif",
+      "bounds": [
+        [
+          -14.133397491203716,
+          -73.49999841302632
+        ],
+        [
+          -13.000001087784781,
+          -72.28335498587069
+        ]
+      ],
+      "regional": true
+    }
+  ]
+}

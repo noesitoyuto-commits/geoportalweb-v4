@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="es">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mapas de Tamburco · Ampay Vivo</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<style>
+  html,body{padding:0;margin:0;height:100%;font:14px system-ui;color:#e9f6fc;background:#101e2a}
+  body{display:grid;grid-template-rows:auto 1fr}
+  header{padding:12px 16px;background:#0b1927}
+  h1{font-size:18px;margin:0}
+  #mapa{background:#e0e9e7}
+</style>
+<header><h1>Ampay Vivo · Mapas de Tamburco</h1></header>
+<div id="mapa" aria-label="Mapa interactivo de Tamburco"></div>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="capas_ampay.js"></script>
+<script>
+  const mapa = L.map('mapa');
+  L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+    attribution: 'Imágenes &copy; Esri', maxZoom: 19
+  }).addTo(mapa);
+  const limite = L.geoJSON(window.ampayJupyterCatalogo.limite, {
+    style: { color: '#40e0cc', weight: 2, fillOpacity: 0 }
+  }).addTo(mapa);
+  mapa.fitBounds(limite.getBounds(), { padding: [25, 25] });
+  const capas = window.ampayJupyterCatalogo.capas;
+  window.agregarMapasJupyterAmpay(mapa, capas.some(c => c.id === 'rgb') ? 'rgb' : capas[0]?.id);
+</script>
+
